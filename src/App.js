@@ -5,10 +5,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+
+// import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import LocationPicker from './components/LocationPicker'
+import Drawer from '@material-ui/core/Drawer';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+  },
+  list: {
+    width: 250,
   },
 
   // Grid
@@ -39,18 +45,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+  const [state, setState] = React.useState({
+    top: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, "left": open });
+  };
+
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+            <MenuIcon onClick={toggleDrawer("left", true)}/>
+            <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
+
+              <div className={classes.list}>
+                <center style={{marginTop: 40}}>Created By: Deval Parikh</center>
+                <center style={{marginTop: 5}}><a href="http://devalparikh.me/">devalparikh.me</a></center>
+                <center style={{marginTop: 40}}>Powered By: The Covid Tracking Project</center>
+                <center style={{marginTop: 5}}><a href="https://covidtracking.com/">The Covid Tracking Project</a></center>
+              </div>
+            </Drawer>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            HousingHelper
+            {/* HousingHelper */}
+            Covid By State
           </Typography>
-          <Button color="inherit">Login</Button>
+          {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
       <LocationPicker />
