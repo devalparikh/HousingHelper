@@ -1,68 +1,82 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Housing Helper (Roommate)
 
-## Available Scripts
+Roommate Finder By Company
 
-In the project directory, you can run:
+---
 
-### `npm start`
+**Idea:** Find 3rd party housing and filter by company, location, and price.(helps commuting etc)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- Framework
 
-### `npm test`
+    **Web Application:** User creates post for open room
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - Post
+        - company
+        - location
+        - bed/bath (1 bath, 1 shared bath)
+        - (optional) has transportation / needs transportation
+        - price
+    - User
+        - info: username, email (private until matched), password (always private)
+        - posts
+        - matched users (when users matched)
+    - Matches
+        - pending matches: ppl requested to match w ur room
+            - poster: shows accept or decline button
+            - seeker: shows requested
+        - accepted matches:
+            - shows email address
 
-### `npm run build`
+    **API:** Handles posts, users, matches
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    - Posts
+        - get all
+        - get by filter
+            - [https://softauthor.com/firebase-querying-sorting-filtering-database-with-nodejs-client](https://softauthor.com/firebase-querying-sorting-filtering-database-with-nodejs-client)
+            - company
+                - *companyName*
+            - location
+                - *cityName*
+                - *stateName*
+            - price
+                - *priceValue*
+    - User
+        - get all user's posts
+    - Matches
+        - Poster
+            - get all requested user
+            - get all matched
+        - Seeker
+            - get all (seeker) requested user
+            - get all matched
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Code Base
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To spin up docker container from image (***-it***: interactive terminal for detached mode used -*d*, ***-p*:** port, ***9000***: machine port for docker, ***5000***: server port, ***node-docker***: docker image)
 
-### `npm run eject`
+(backend)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+docker run -it -p 9000:5000 node-docker
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+List of running contianers
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+docker ps
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To start the react development client
 
-## Learn More
+```bash
+npm run start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To start node development server with nodemon
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```bash
+cd backend
+nodemon server
+```
