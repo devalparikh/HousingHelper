@@ -49,11 +49,11 @@ export default function App() {
     top: false,
   });
 
+  // Toggle Side Bar
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, "left": open });
   };
 
@@ -65,18 +65,14 @@ export default function App() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon onClick={toggleDrawer("left", true)}/>
             <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
-
               <div className={classes.list}>
                 <center style={{marginTop: 40}}>Created By: Deval Parikh</center>
                 <center style={{marginTop: 5}}><a href="http://devalparikh.me/">devalparikh.me</a></center>
-                <center style={{marginTop: 40}}>Powered By: The Covid Tracking Project</center>
-                <center style={{marginTop: 5}}><a href="https://covidtracking.com/">The Covid Tracking Project</a></center>
               </div>
             </Drawer>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {/* HousingHelper */}
-            Covid By State
+            HousingHelper
           </Typography>
           {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
