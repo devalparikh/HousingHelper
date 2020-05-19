@@ -1,4 +1,4 @@
-# Housing Helper (Roommate)
+# Housing Helper
 
 Roommate Finder By Company
 
@@ -8,49 +8,14 @@ Roommate Finder By Company
 
 ---
 
-- Framework
+[Application Design - HousingHelper](https://www.notion.so/Application-Design-HousingHelper-83f2f97a2a284815b569f1685c8420bd)
 
-    **Web Application:** User creates post for open room
+### Technologies Used
 
-    - Post
-        - company
-        - location
-        - bed/bath (1 bath, 1 shared bath)
-        - (optional) has transportation / needs transportation
-        - price
-    - User
-        - info: username, email (private until matched), password (always private)
-        - posts
-        - matched users (when users matched)
-    - Matches
-        - pending matches: ppl requested to match w ur room
-            - poster: shows accept or decline button
-            - seeker: shows requested
-        - accepted matches:
-            - shows email address
-
-    **API:** Handles posts, users, matches
-
-    - Posts
-        - get all
-        - get by filter
-            - [https://softauthor.com/firebase-querying-sorting-filtering-database-with-nodejs-client](https://softauthor.com/firebase-querying-sorting-filtering-database-with-nodejs-client)
-            - company
-                - *companyName*
-            - location
-                - *cityName*
-                - *stateName*
-            - price
-                - *priceValue*
-    - User
-        - get all user's posts
-    - Matches
-        - Poster
-            - get all requested user
-            - get all matched
-        - Seeker
-            - get all (seeker) requested user
-            - get all matched
+- NodeJS
+- Express
+- ReactJS
+- Docker
 
 ### Code Base
 
