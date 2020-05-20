@@ -77,7 +77,7 @@ export default function App() {
           {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
-      <LocationPicker />
+      {/* <LocationPicker /> */}
 
     </div>
   );
