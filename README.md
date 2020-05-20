@@ -18,22 +18,39 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 - Express
 - ReactJS
 - Docker
+- NGINX
 
 ## Codebase
 
 ---
 
-### Docker
+### Deployment - Docker
 
-Spin up docker container from image (***-it***: interactive terminal for detached mode used -*d*, ***-p*:** port, ***9000***: machine port for docker, ***5000***: server port, ***node-docker***: docker image)
+1) Build docker containers
 
-node
+Node
+
+```bash
+(backend) docker build -t housinghelper-nginx-react-docker .
+```
+
+React-nginx
+
+```bash
+docker build -t housinghelper-nginx-react-docker .
+```
+
+2) Spin up docker container 
+
+note: (***-it***: interactive terminal for detached mode use -*d*, ***-p*:** port, ***9000***: machine port for docker, ***5000***: server port, ***node-docker***: docker image)
+
+Node
 
 ```bash
 (backend) docker run -it -p 9000:5000 housinghelper-node-docker
 ```
 
-react-nginx
+React-NGINX
 
 ```bash
 docker run -p 3000:80 housinghelper-nginx-react-docker
@@ -45,19 +62,20 @@ List of running contianers
 docker ps
 ```
 
-### React
+### Dev Environment
 
-Start the react development client
-
-```bash
-npm run start
-```
-
-### Node
+Node
 
 Start node development server with nodemon
 
 ```bash
-cd backend
-nodemon server
+(backend) nodemon server
+```
+
+React
+
+Start the react development client on [http://localhost:3000/](http://localhost:3000/)
+
+```bash
+npm run start
 ```
