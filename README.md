@@ -27,10 +27,16 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 
 Spin up docker container from image (***-it***: interactive terminal for detached mode used -*d*, ***-p*:** port, ***9000***: machine port for docker, ***5000***: server port, ***node-docker***: docker image)
 
-(backend)
+node
 
 ```bash
-docker run -it -p 9000:5000 housinghelper-node-docker
+(backend) docker run -it -p 9000:5000 housinghelper-node-docker
+```
+
+react-nginx
+
+```bash
+docker run -p 3000:80 housinghelper-nginx-react-docker
 ```
 
 List of running contianers
