@@ -1,30 +1,36 @@
 # Housing Helper
 
-Roommate Finder By Company
-
----
-
-**Idea:** Find 3rd party housing and filter by company, location, and price.(helps commuting etc)
-
----
+A simple way to find a roommate and a carpool buddy
 
 [Application Design - HousingHelper](https://www.notion.so/Application-Design-HousingHelper-83f2f97a2a284815b569f1685c8420bd)
 
-### Technologies Used
+## Idea
+
+---
+
+Find 3rd party housing and filter housing posts by company, location, and price.(helps commuting etc)
+
+## Technologies Used
+
+---
 
 - NodeJS
 - Express
 - ReactJS
 - Docker
 
-### Code Base
+## Codebase
 
-To spin up docker container from image (***-it***: interactive terminal for detached mode used -*d*, ***-p*:** port, ***9000***: machine port for docker, ***5000***: server port, ***node-docker***: docker image)
+---
+
+### Docker
+
+Spin up docker container from image (***-it***: interactive terminal for detached mode used -*d*, ***-p*:** port, ***9000***: machine port for docker, ***5000***: server port, ***node-docker***: docker image)
 
 (backend)
 
 ```bash
-docker run -it -p 9000:5000 node-docker
+docker run -it -p 9000:5000 housinghelper-node-docker
 ```
 
 List of running contianers
@@ -33,13 +39,17 @@ List of running contianers
 docker ps
 ```
 
-To start the react development client
+### React
+
+Start the react development client
 
 ```bash
 npm run start
 ```
 
-To start node development server with nodemon
+### Node
+
+Start node development server with nodemon
 
 ```bash
 cd backend
