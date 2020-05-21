@@ -12,6 +12,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import LocationPicker from './components/LocationPicker'
+import NewPostPage from './components/NewPostPage'
+import LoginPage from './components/LoginPage'
+import SignUpPage from './components/SignUpPage'
 import Drawer from '@material-ui/core/Drawer';
 
 
@@ -39,10 +42,12 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid rgb(226, 226, 226)",
 
   },
-  drawerTitle: {
+  drawerTitle: {    
+    fontWeight: 800,
     color: "white",
     textTransform: "initial",
-    fontSize: "20px"
+    fontSize: "20px",
+    marginLeft: "15px",
   },
 
   // Grid
@@ -97,25 +102,26 @@ export default function App() {
     if(mobile === false) {
       return(
         <AppBar position="static">
-            <Toolbar>
+            <Toolbar className="main-color-bg">
               <Typography variant="h6" className={classes.title}>
                 HousingHelper
               </Typography>
-              <Button color="inherit">Login</Button>
-              <Button color="inherit">Sign Up</Button>
+              <Button href="/new" color="inherit">Post</Button>
+              <Button href="/login" color="inherit">Login</Button>
+              <Button href="/signup" color="inherit">Sign Up</Button>
             </Toolbar>
           </AppBar>
       )  
     } else {
       return(
         <AppBar position="static">
-            <Toolbar>
+            <Toolbar className="main-color-bg">
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <MenuIcon onClick={toggleDrawer("left", true)}/>
                 <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
-                <div style={{backgroundColor: "#3f51b5", minHeight: "56px", width: "100%"}} className={classes.list}>
-                    <Button onClick={toggleDrawer("left", false)} style={{backgroundColor: "white", color: "#3f51b5", width:"40px", margin: "10px", marginLeft: "10", borderRadius: "50px"}} color="inherit">X</Button>
-                    {/* <Button href="/" className={classes.drawerTitle}>HousingHelper</Button> */}
+                <div style={{backgroundColor: "#454c71", minHeight: "56px", width: "100%"}} className={classes.list}>
+                    <Button onClick={toggleDrawer("left", false)} style={{backgroundColor: "white", color: "#454c71", width:"40px", margin: "10px", marginLeft: "10", borderRadius: "50px", textTransform: "lowercase"}} color="inherit">x</Button>
+                    <Button href="/" className={classes.drawerTitle}>HH</Button>
                 </div>
                   <div style={{marginTop: "10px"}} className={classes.list}>
                     {/* <center>
@@ -124,8 +130,9 @@ export default function App() {
                     </center> */}
                     <center>
                       <Button href="/" className={classes.drawerButton} color="inherit">Home</Button>
+                      <Button href="/new" className={classes.drawerButton} color="inherit">Post</Button>
                       <Button href="/login" className={classes.drawerButton} color="inherit">Login</Button>
-                      <Button className={classes.drawerButton} color="inherit">Sign Up</Button>
+                      <Button href="/signup" className={classes.drawerButton} color="inherit">Sign Up</Button>
                     </center>
                   </div>
                 </Drawer>
@@ -144,7 +151,9 @@ export default function App() {
     <Router>
       <div className={classes.root}>
         {renderTabs()}
-        <Route path="/login" exact component={LocationPicker} />
+        <Route path="/new" exact component={NewPostPage} />
+        <Route path="/login" exact component={LoginPage} />
+        <Route path="/signup" exact component={SignUpPage} />
         {/* <LocationPicker /> */}
 
       </div>
