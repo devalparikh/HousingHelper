@@ -39,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid rgb(226, 226, 226)",
 
   },
+  drawerTitle: {
+    color: "white",
+    textTransform: "initial",
+    fontSize: "20px"
+  },
 
   // Grid
   grid_main: {
@@ -108,15 +113,20 @@ export default function App() {
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <MenuIcon onClick={toggleDrawer("left", true)}/>
                 <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
-                  <div style={{justifyContent:"center", marginTop: "10px"}} className={classes.list}>
+                <div style={{backgroundColor: "#3f51b5", minHeight: "56px", width: "100%"}} className={classes.list}>
+                    <Button onClick={toggleDrawer("left", false)} style={{backgroundColor: "white", color: "#3f51b5", width:"40px", margin: "10px", marginLeft: "10", borderRadius: "50px"}} color="inherit">X</Button>
+                    {/* <Button href="/" className={classes.drawerTitle}>HousingHelper</Button> */}
+                </div>
+                  <div style={{marginTop: "10px"}} className={classes.list}>
                     {/* <center>
                       <Button style={{backgroundColor: "#3f51b5", color: "white", width:"90%", height:"50px", marginTop: "10px"}} color="inherit">Login</Button>
                       <Button style={{backgroundColor: "#3f51b5", color: "white", width:"90%", height:"50px", marginTop: "10px"}} color="inherit">Sign Up</Button>
                     </center> */}
-                    <Button onClick={toggleDrawer("left", false)} style={{backgroundColor: "#3f51b5", color: "white", width:"40px", margin: "10px", marginLeft: "10", borderRadius: "50px"}} color="inherit">X</Button>
-                    <Button href="/" className={classes.drawerTitle} color="inherit">HousingHelper</Button>
-                    <Button href="/login" className={classes.drawerButton} color="inherit">Login</Button>
-                    <Button className={classes.drawerButton} color="inherit">Sign Up</Button>
+                    <center>
+                      <Button href="/" className={classes.drawerButton} color="inherit">Home</Button>
+                      <Button href="/login" className={classes.drawerButton} color="inherit">Login</Button>
+                      <Button className={classes.drawerButton} color="inherit">Sign Up</Button>
+                    </center>
                   </div>
                 </Drawer>
               </IconButton>
