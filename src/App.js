@@ -103,9 +103,9 @@ export default function App() {
       return(
         <AppBar position="static">
             <Toolbar className="main-color-bg">
-              <Typography variant="h6" className={classes.title}>
+              <a href="/" variant="h6" className={classes.title} style={{color: "white", fontWeight: "800", textDecoration: "none"}}>
                 HousingHelper
-              </Typography>
+              </a>
               <Button href="/new" color="inherit">Post</Button>
               <Button href="/login" color="inherit">Login</Button>
               <Button href="/signup" color="inherit">Sign Up</Button>
@@ -137,9 +137,9 @@ export default function App() {
                   </div>
                 </Drawer>
               </IconButton>
-              <Typography variant="h6" className={classes.title}>
+              <a href="/" variant="h6" className={classes.title} style={{color: "white", fontWeight: "800", textDecoration: "none"}}>
                 HousingHelper
-              </Typography>
+              </a>
 
             </Toolbar>
           </AppBar>
