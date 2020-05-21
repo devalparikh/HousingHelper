@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 
 // App Bar
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 // import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -28,6 +30,15 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
   },
+  drawerButton: {
+    fontWeight: 800, 
+    fontSize: "30px", 
+    marginTop:"20px",
+
+    width: "90%",
+    borderBottom: "1px solid rgb(226, 226, 226)",
+
+  },
 
   // Grid
   grid_main: {
@@ -46,8 +57,28 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    top: false,
+    mobile: false,
   });
+  const [mobile, setMobile] = useState(0);
+
+
+
+  React.useEffect(() => {
+    // Update the document title using the browser API
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    if (mediaQuery.matches) {
+      setMobile(false);
+    } else {
+      setMobile(true);
+    }
+    mediaQuery.addListener((mq) => {
+      if (mq.matches) {
+        setMobile(false);
+      } else {
+        setMobile(true);
+      }
+    });
+  }, []);
 
   // Toggle Side Bar
   const toggleDrawer = (anchor, open) => (event) => {
@@ -57,28 +88,56 @@ export default function App() {
     setState({ ...state, "left": open });
   };
 
+  function renderTabs() {
+    if(mobile === false) {
+      return(
+        <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" className={classes.title}>
+                HousingHelper
+              </Typography>
+              <Button color="inherit">Login</Button>
+              <Button color="inherit">Sign Up</Button>
+            </Toolbar>
+          </AppBar>
+      )  
+    } else {
+      return(
+        <AppBar position="static">
+            <Toolbar>
+              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                <MenuIcon onClick={toggleDrawer("left", true)}/>
+                <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
+                  <div style={{justifyContent:"center", marginTop: "10px"}} className={classes.list}>
+                    {/* <center>
+                      <Button style={{backgroundColor: "#3f51b5", color: "white", width:"90%", height:"50px", marginTop: "10px"}} color="inherit">Login</Button>
+                      <Button style={{backgroundColor: "#3f51b5", color: "white", width:"90%", height:"50px", marginTop: "10px"}} color="inherit">Sign Up</Button>
+                    </center> */}
+                    <Button onClick={toggleDrawer("left", false)} style={{backgroundColor: "#3f51b5", color: "white", width:"40px", margin: "10px", marginLeft: "10", borderRadius: "50px"}} color="inherit">X</Button>
+                    <Button href="/" className={classes.drawerTitle} color="inherit">HousingHelper</Button>
+                    <Button href="/login" className={classes.drawerButton} color="inherit">Login</Button>
+                    <Button className={classes.drawerButton} color="inherit">Sign Up</Button>
+                  </div>
+                </Drawer>
+              </IconButton>
+              <Typography variant="h6" className={classes.title}>
+                HousingHelper
+              </Typography>
+
+            </Toolbar>
+          </AppBar>
+      )
+    }
+  }
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon onClick={toggleDrawer("left", true)}/>
-            <Drawer anchor={"left"} open={state["left"]} onClose={toggleDrawer("left", false)}>
-              <div className={classes.list}>
-                <center style={{marginTop: 40}}>Created By: Deval Parikh</center>
-                <center style={{marginTop: 5}}><a href="http://devalparikh.me/">devalparikh.me</a></center>
-              </div>
-            </Drawer>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            HousingHelper
-          </Typography>
-          {/* <Button color="inherit">Login</Button> */}
-        </Toolbar>
-      </AppBar>
-      {/* <LocationPicker /> */}
+    <Router>
+      <div className={classes.root}>
+        {renderTabs()}
+        <Route path="/login" exact component={LocationPicker} />
+        {/* <LocationPicker /> */}
 
-    </div>
+      </div>
+    </Router>
   );
 }
