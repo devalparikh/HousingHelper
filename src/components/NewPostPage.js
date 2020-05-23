@@ -140,7 +140,7 @@ export default class NewPostPage extends Component{
                         <h2>Housing Information</h2>
                     </Grid>
                     
-                    <Grid container justify="center">
+                    <Grid container justify="center" style={{marginLeft:"-3px"}}>
                     <FormControlLabel
                         control={
                         <Checkbox
