@@ -206,3 +206,19 @@ COLORS
   color: #ff5a5f;
 }
 
+
+/* 
+
+HIGHLIGHT COLORS
+
+*/
+::-moz-selection {
+  background: #bdf5ff;
+}
+::-webkit-selection {
+  background: #bdf5ff;
+}
+::selection {
+  background: #bdf5ff;
+}
+

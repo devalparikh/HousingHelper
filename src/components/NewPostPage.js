@@ -6,12 +6,17 @@ import Grid from '@material-ui/core/Grid';
 import csc from 'country-state-city';
 import usc from 'us-state-codes';
 
-import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import NumberFormat from 'react-number-format';
-import { Button } from '@material-ui/core';
+import { 
+    Button,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    TextareaAutosize 
+} from '@material-ui/core';
+
+
 
 const temp_companies = [
     {"name": "Facebook"},
@@ -166,6 +171,7 @@ export default class NewPostPage extends Component{
                         label="Rent Price"
                         style={{width: "200px"}}
                         value={this.state.price}
+                        variant="outlined"
                         onChange={handleChange}
                         name="price"
                         id="price-input"
@@ -179,11 +185,11 @@ export default class NewPostPage extends Component{
 
             <Grid item xs={12} sm={6}>
             <div className="normal-card" style={{marginLeft: "16px",}}>
-                    <Grid container  justify="center" spacing={3} style={{marginBottom: "20px",}}>
+                    <Grid container  justify="center" spacing={3} style={{marginBottom: "30px",}}>
                         <h2>Company</h2>
                     </Grid>
                     
-                    <Grid container justify="center" spacing={3}>
+                    <Grid container justify="center" spacing={3} style={{marginBottom: "10px",}}>
                         <Autocomplete
                             id="user-state"
                             options={temp_companies}
@@ -199,17 +205,30 @@ export default class NewPostPage extends Component{
             
 
             <Grid item xs={12} sm={6}>
-                <div className="normal-card" style={{marginLeft: "16px",}}>
-                    <Grid container  justify="center" spacing={3} style={{marginTop: "47px", marginBottom: "47px",}}>
-                        <Button style={{backgroundColor:"#454c71", color: "white", width: "50%", height: "60px"}}>Post Housing</Button>
+                <div className="normal-card" style={{marginLeft: "16px", height: "180px"}}>
+                    <Grid container  justify="center" spacing={3} style={{marginBottom: "10px",}}>
+                        <h2>More Info</h2>
                     </Grid>
+                    <Grid container justify="center" spacing={3}>
                     
+                        <form noValidate autoComplete="off">
+                            <TextareaAutosize
+                                style={{fontSize:"1rem", padding: "20px", minWidth: "290px", width: "290px", maxWidth: "300px", minHeight: "60px", height: "60px", maxHeight: "90px"}}
+                                rowsMax={4}
+                                aria-label="maximum height"
+                                placeholder="(Enter more information about the housing or yourself)"
+                                defaultValue=""
+                                />
+                         </form>
+                    </Grid>
                     
                 </div>
             </Grid>
             
         </Grid>
-
+        <center>
+            <Button style={{backgroundColor:"#454c71", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}}>Post Housing</Button>
+        </center>
       </div>
     )
   }
