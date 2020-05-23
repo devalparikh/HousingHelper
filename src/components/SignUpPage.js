@@ -32,6 +32,12 @@ export default class SignUpPage extends Component {
   // onChange(e) {
   //   this.setState({[e.target.name]: e.target.value})
   // }
+  onChangeEmail(e) {
+    this.setState({
+      username: e.target.value,
+      formMessage: '',
+    });
+  }
 
   onChangeUsername(e) {
     this.setState({
@@ -104,6 +110,9 @@ export default class SignUpPage extends Component {
                     <div className="card-body">
                         <h3 className="big-text" style={{ paddingBottom: "1rem" }}>HousingHelper | Sign Up</h3>
                         <form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                            <TextField style={{width: "250px"}} label="Email" id="email" type="email" variant="outlined" value={this.state.email} onChange={this.onChangeEmail} required/>
+                        </div>
                         <div className="form-group">
                             <TextField style={{width: "250px"}} label="Username" id="username" type="username" variant="outlined" value={this.state.username} onChange={this.onChangeUsername} required/>
                         </div>

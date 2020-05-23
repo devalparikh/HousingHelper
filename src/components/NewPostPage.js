@@ -136,7 +136,7 @@ export default class NewPostPage extends Component{
 
             <Grid item xs={12} sm={6}>
             <div className="normal-card" style={{marginLeft: "16px",}}>
-                    <Grid container  justify="center" spacing={3} style={{marginBottom: "20px",}}>
+                    <Grid container  justify="center" spacing={3} style={{marginBottom: "5px",}}>
                         <h2>Housing Information</h2>
                     </Grid>
                     
@@ -166,7 +166,7 @@ export default class NewPostPage extends Component{
                             label="Private Bathroom?"
                         />
                     </Grid>
-                    <Grid container justify="center" spacing={3} style={{marginTop: "10px", marginBottom: "22px",}}>
+                    <Grid container justify="center" spacing={3} style={{marginTop: "10px", marginBottom: "28px",}}>
                     <TextField
                         label="Rent Price"
                         style={{width: "200px"}}
