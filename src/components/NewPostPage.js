@@ -13,7 +13,8 @@ import {
     TextField,
     FormControlLabel,
     Checkbox,
-    TextareaAutosize 
+    TextareaAutosize,
+    Snackbar 
 } from '@material-ui/core';
 
 
@@ -119,6 +120,7 @@ export default class NewPostPage extends Component{
                             getOptionLabel={(option) => option.name}
                             style={{ width: 300, height: 100 }}
                             renderInput={(params) => <TextField {...params} label="State" variant="outlined" />}
+                            required
                         />
                         </Grid>
                         <Grid container justify="center" spacing={3}>
@@ -129,6 +131,7 @@ export default class NewPostPage extends Component{
                             getOptionLabel={(option) => option.name}
                             style={{ width: 300, height: 100 }}
                             renderInput={(params) => <TextField {...params} label="City" variant="outlined" />}
+                            required
                         />
                     </Grid>
                 </div>
@@ -227,7 +230,7 @@ export default class NewPostPage extends Component{
             
         </Grid>
         <center>
-            <Button style={{backgroundColor:"#454c71", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}}>Post Housing</Button>
+            <Button className="post-button" style={{backgroundColor:"#454c71", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}}>Post Housing</Button>
         </center>
       </div>
     )
