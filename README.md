@@ -10,7 +10,7 @@ A simple way to find a roommate and a carpool buddy
 
 Find 3rd party housing and filter housing posts by company, location, and price.(helps commuting etc)
 
-## Technologies Used
+## Built With
 
 ---
 
@@ -31,29 +31,34 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 
 @access Public
 
-// @route **GET /users/:id**
 
-// @desc Get a user by their username, (_id, username, createdAt, updatedAt)
+@route **GET /users/:id**
 
-// @access Public
+@desc Get a user by their username, (_id, username, createdAt, updatedAt)
 
-// @route **POST /users/register**
+@access Public
 
-// @desc Register new user, body needs (email, username, password)
 
-// @access Public
+@route **POST /users/register**
 
-// @route **POST** **/auth/login**
+@desc Register new user, body needs (email, username, password)
 
-// @desc Login Autheniticate user, body needs (username, password)
+@access Public
 
-// @access Public
 
-// @route **GET /auth/user**
+@route **POST** **/auth/login**
 
-// @desc Get all user data by jwt token
+@desc Login Autheniticate user, body needs (username, password)
 
-// @access Private
+@access Public
+
+
+@route **GET /auth/user**
+
+@desc Get all user data by jwt token
+
+@access Private
+
 
 ## Codebase
 
