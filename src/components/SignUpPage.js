@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import "../App.css"
 import Grid from '@material-ui/core/Grid';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import axios from 'axios';
+import { apiURL } from '../constant';
 
 
 // import axios from 'axios';
@@ -15,12 +17,14 @@ export default class SignUpPage extends Component {
     super(props)
 
     // this.onChange = this.onChange.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.changeFormMessage = this.changeFormMessage.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      email: '',
       username: '',
       password: '',
 
@@ -34,7 +38,7 @@ export default class SignUpPage extends Component {
   // }
   onChangeEmail(e) {
     this.setState({
-      username: e.target.value,
+      email: e.target.value,
       formMessage: '',
     });
   }
@@ -61,42 +65,28 @@ export default class SignUpPage extends Component {
 
   onSubmit(e) {
     e.preventDefault()
-
+    // Authentication
     const user = {
+      email: this.state.email,
       username: this.state.username,
       password: this.state.password
     }
-
-    // login(user)
-    // .then(res => {
-    //   // The login function executed without errors
-    //   if(res) {
-    //     // successful login
-    //     window.location = '/profile';
-    //   } else {
-    //     // unsucessful login
-    //     console.log(res) 
-    //   }
-    // })
-    // .catch(err => {
-    //   // The login function executed with errors
-    //   console.log(err)
-    // })
     
-    // axios
-    //   .post('/users/login', {
-    //       username: user.username,
-    //       password: user.password
-    //   })
-    //   .then(res => {
-    //       localStorage.setItem('usertoken', res.data)
-    //       window.location = '/profile';
+    axios
+      .post(apiURL+'/users/register', {
+          email: user.email,
+          username: user.username,
+          password: user.password
+      })
+      .then(res => {
+          localStorage.setItem('usertoken', res.data.token)
+          window.location = '/profile';
 
-    //   })
-    //   .catch(err => {
-    //       this.changeFormMessage(err.response.data.error)
-    //       console.log(err.response.data.error)
-    //   });
+      })
+      .catch(err => {
+          this.changeFormMessage(err.response.data.msg)
+          console.log(err.response.data.msg)
+      });
 
 }
 
@@ -122,7 +112,7 @@ export default class SignUpPage extends Component {
                         
                         <div className="form-group">
                         <br/>
-                        <Button variant="contained" color="primary" disabled={this.state.username === "" || this.state.password === ""}>Sign Up</Button>
+                        <Button type="submit" variant="contained" color="primary" disabled={this.state.username === "" || this.state.password === ""}>Sign Up</Button>
                         </div>
                         <label className="small-text error">{this.state.formMessage}</label>
                         <br/>

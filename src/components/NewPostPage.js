@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { getProfile } from '../functions/UserFunctions';
 
 // Search Bar
 
@@ -56,6 +57,11 @@ export default class NewPostPage extends Component{
         super(props)
     
         this.state = {
+            authorized: 0,
+
+            username: "",
+            user_id: "",
+            
             selected_state_id: "",
             selected_state_name: "",
             selected_city_id: "",
@@ -65,6 +71,24 @@ export default class NewPostPage extends Component{
 
         }
       }  
+    
+    componentDidMount() {
+        // Authorization
+        const token = localStorage.usertoken
+        getProfile(token).then(res => {
+            this.setState({
+                username: res.username,
+                user_id: res._id,
+                authorized: 1
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            this.setState({
+                authorized: 0
+            })
+        })
+      }
       
     onChangeUserState(value) {
         if(value) {
@@ -93,146 +117,155 @@ export default class NewPostPage extends Component{
           [event.target.name]: event.target.value,
         });
       };
+    
+    if(this.state.authorized) {
+        return (
+            <div>
+              <Grid container style={{flexGrow: 1, marginTop: 20, maxWidth: "100%",}} spacing={2}>
+                  <Grid item xs={12} sm={12}>
+                      <div className="normal-card" style={{marginLeft: "16px",}}>
+                          
+                          <Grid container justify="center" spacing={3} style={{marginBottom:10}}>
+                              <p className="big-text" style={{marginTop:"40px"}}>Need a Roommate?</p>
+                          </Grid>
+                      </div>
+                  </Grid>
       
-    return (
-      <div>
-        <Grid container style={{flexGrow: 1, marginTop: 20, maxWidth: "100%",}} spacing={2}>
-            <Grid item xs={12} sm={12}>
-                <div className="normal-card" style={{marginLeft: "16px",}}>
-                    
-                    <Grid container justify="center" spacing={3} style={{marginBottom:10}}>
-                        <p className="big-text" style={{marginTop:"40px"}}>Need a Roommate?</p>
-                    </Grid>
-                </div>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-                <div className="normal-card" style={{marginLeft: "16px",}}>
-                    <Grid container  justify="center" spacing={3} style={{marginBottom: "20px",}}>
-                        <h2>Location</h2>
-                    </Grid>
-                    
-                    <Grid container justify="center" spacing={3}>
-                        <Autocomplete
-                            id="user-state"
-                            options={csc.getStatesOfCountry(csc.getCountryByCode("US").id)}
-                            onChange={(event, value) =>  this.onChangeUserState(value)}
-                            getOptionLabel={(option) => option.name}
-                            style={{ width: 300, height: 100 }}
-                            renderInput={(params) => <TextField {...params} label="State" variant="outlined" />}
-                            required
-                        />
-                        </Grid>
-                        <Grid container justify="center" spacing={3}>
-                        <Autocomplete
-                            id="user-city"
-                            options={csc.getCitiesOfState(this.state.selected_state_id)}
-                            // onChange={(event, value) => this.setState({selected_city_id: value.id})}
-                            getOptionLabel={(option) => option.name}
-                            style={{ width: 300, height: 100 }}
-                            renderInput={(params) => <TextField {...params} label="City" variant="outlined" />}
-                            required
-                        />
-                    </Grid>
-                </div>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-            <div className="normal-card" style={{marginLeft: "16px",}}>
-                    <Grid container  justify="center" spacing={3} style={{marginBottom: "5px",}}>
-                        <h2>Housing Information</h2>
-                    </Grid>
-                    
-                    <Grid container justify="center" style={{marginLeft:"-3px"}}>
-                    <FormControlLabel
-                        control={
-                        <Checkbox
-                            // checked={}
-                            // onChange={}
-                            name="checkedPrivateBedroom"
-                            color="primary"
-                        />
-                        }
-                        label="Private Bedroom?"
-                    />
-                    </Grid>
-                    <Grid container justify="center">
-                        <FormControlLabel
-                            control={
-                            <Checkbox
-                                // checked={}
-                                // onChange={}
-                                name="checkedPrivateBathroom"
-                                color="primary"
-                            />
-                            }
-                            label="Private Bathroom?"
-                        />
-                    </Grid>
-                    <Grid container justify="center" spacing={3} style={{marginTop: "10px", marginBottom: "28px",}}>
-                    <TextField
-                        label="Rent Price"
-                        style={{width: "200px"}}
-                        value={this.state.price}
-                        variant="outlined"
-                        onChange={handleChange}
-                        name="price"
-                        id="price-input"
-                        InputProps={{
-                            inputComponent: NumberFormatCustom,
-                        }}
-                    />
-                    </Grid>
-                </div>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-            <div className="normal-card" style={{marginLeft: "16px",}}>
-                    <Grid container  justify="center" spacing={3} style={{marginBottom: "30px",}}>
-                        <h2>Company</h2>
-                    </Grid>
-                    
-                    <Grid container justify="center" spacing={3} style={{marginBottom: "10px",}}>
-                        <Autocomplete
-                            id="user-state"
-                            options={temp_companies}
-                            // onChange={}
-                            getOptionLabel={(option) => option.name}
-                            style={{ width: 300, height: 100 }}
-                            renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
-                        />
-                    </Grid>
-                </div>
-            </Grid>
-
-            
-
-            <Grid item xs={12} sm={6}>
-                <div className="normal-card" style={{marginLeft: "16px", height: "180px"}}>
-                    <Grid container  justify="center" spacing={3} style={{marginBottom: "10px",}}>
-                        <h2>More Info</h2>
-                    </Grid>
-                    <Grid container justify="center" spacing={3}>
-                    
-                        <form noValidate autoComplete="off">
-                            <TextareaAutosize
-                                style={{fontSize:"1rem", padding: "20px", minWidth: "290px", width: "290px", maxWidth: "300px", minHeight: "60px", height: "60px", maxHeight: "90px"}}
-                                rowsMax={4}
-                                aria-label="maximum height"
-                                placeholder="(Enter more information about the housing or yourself)"
-                                defaultValue=""
-                                />
-                         </form>
-                    </Grid>
-                    
-                </div>
-            </Grid>
-            
-        </Grid>
-        <center>
-            <Button className="post-button" style={{backgroundColor:"#454c71", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}}>Post Housing</Button>
-        </center>
-      </div>
-    )
+                  <Grid item xs={12} sm={6}>
+                      <div className="normal-card" style={{marginLeft: "16px",}}>
+                          <Grid container  justify="center" spacing={3} style={{marginBottom: "20px",}}>
+                              <h2>Location</h2>
+                          </Grid>
+                          
+                          <Grid container justify="center" spacing={3}>
+                              <Autocomplete
+                                  id="user-state"
+                                  options={csc.getStatesOfCountry(csc.getCountryByCode("US").id)}
+                                  onChange={(event, value) =>  this.onChangeUserState(value)}
+                                  getOptionLabel={(option) => option.name}
+                                  style={{ width: 300, height: 100 }}
+                                  renderInput={(params) => <TextField {...params} label="State" variant="outlined" />}
+                                  required
+                              />
+                              </Grid>
+                              <Grid container justify="center" spacing={3}>
+                              <Autocomplete
+                                  id="user-city"
+                                  options={csc.getCitiesOfState(this.state.selected_state_id)}
+                                  // onChange={(event, value) => this.setState({selected_city_id: value.id})}
+                                  getOptionLabel={(option) => option.name}
+                                  style={{ width: 300, height: 100 }}
+                                  renderInput={(params) => <TextField {...params} label="City" variant="outlined" />}
+                                  required
+                              />
+                          </Grid>
+                      </div>
+                  </Grid>
+      
+                  <Grid item xs={12} sm={6}>
+                  <div className="normal-card" style={{marginLeft: "16px",}}>
+                          <Grid container  justify="center" spacing={3} style={{marginBottom: "5px",}}>
+                              <h2>Housing Information</h2>
+                          </Grid>
+                          
+                          <Grid container justify="center" style={{marginLeft:"-3px"}}>
+                          <FormControlLabel
+                              control={
+                              <Checkbox
+                                  // checked={}
+                                  // onChange={}
+                                  name="checkedPrivateBedroom"
+                                  color="primary"
+                              />
+                              }
+                              label="Private Bedroom?"
+                          />
+                          </Grid>
+                          <Grid container justify="center">
+                              <FormControlLabel
+                                  control={
+                                  <Checkbox
+                                      // checked={}
+                                      // onChange={}
+                                      name="checkedPrivateBathroom"
+                                      color="primary"
+                                  />
+                                  }
+                                  label="Private Bathroom?"
+                              />
+                          </Grid>
+                          <Grid container justify="center" spacing={3} style={{marginTop: "10px", marginBottom: "28px",}}>
+                          <TextField
+                              label="Rent Price"
+                              style={{width: "200px"}}
+                              value={this.state.price}
+                              variant="outlined"
+                              onChange={handleChange}
+                              name="price"
+                              id="price-input"
+                              InputProps={{
+                                  inputComponent: NumberFormatCustom,
+                              }}
+                          />
+                          </Grid>
+                      </div>
+                  </Grid>
+      
+                  <Grid item xs={12} sm={6}>
+                  <div className="normal-card" style={{marginLeft: "16px",}}>
+                          <Grid container  justify="center" spacing={3} style={{marginBottom: "30px",}}>
+                              <h2>Company</h2>
+                          </Grid>
+                          
+                          <Grid container justify="center" spacing={3} style={{marginBottom: "10px",}}>
+                              <Autocomplete
+                                  id="user-state"
+                                  options={temp_companies}
+                                  // onChange={}
+                                  getOptionLabel={(option) => option.name}
+                                  style={{ width: 300, height: 100 }}
+                                  renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
+                              />
+                          </Grid>
+                      </div>
+                  </Grid>
+      
+                  
+      
+                  <Grid item xs={12} sm={6}>
+                      <div className="normal-card" style={{marginLeft: "16px", height: "180px"}}>
+                          <Grid container  justify="center" spacing={3} style={{marginBottom: "10px",}}>
+                              <h2>More Info</h2>
+                          </Grid>
+                          <Grid container justify="center" spacing={3}>
+                          
+                              <form noValidate autoComplete="off">
+                                  <TextareaAutosize
+                                      style={{fontSize:"1rem", padding: "20px", minWidth: "290px", width: "290px", maxWidth: "300px", minHeight: "60px", height: "60px", maxHeight: "90px"}}
+                                      rowsMax={4}
+                                      aria-label="maximum height"
+                                      placeholder="(Enter more information about the housing or yourself)"
+                                      defaultValue=""
+                                      />
+                               </form>
+                          </Grid>
+                          
+                      </div>
+                  </Grid>
+                  
+              </Grid>
+              <center>
+                  <Button className="post-button" style={{backgroundColor:"#454c71", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}}>Post Housing</Button>
+              </center>
+            </div>
+          )
+    } else {
+        return (
+            <div>
+                Unathorized
+            </div>
+          )
+    }
+    
   }
 }
