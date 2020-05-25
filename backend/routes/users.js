@@ -20,6 +20,8 @@ router.route('/').get((req, res) => {
 // @access Public
 router.route('/user/:id').get((req, res) => {
   User.findById(req.params.id) // find() returns promise
+    .select('-password')
+    .select('-email')
     .then(user => res.json({ username: user.username, createdAt: user.createdAt })) // returns users
     .catch(err => res.status(400).json({msg: err})); // catches errors and returns err
 });

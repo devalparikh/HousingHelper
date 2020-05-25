@@ -47,7 +47,7 @@ router.route('/login').post((req, res) => {
     })
 })
 
-// @route POST /auth/user
+// @route GET /auth/user
 // @desc Get user data
 // @access Private
 router.get('/user', auth, async (req, res) => {

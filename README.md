@@ -17,8 +17,43 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 - NodeJS
 - Express
 - ReactJS
+- MongoDB
 - Docker
 - NGINX
+
+## API Routes
+
+---
+
+@route **Get /users**
+
+@desc Gets all users, (_id, username, createdAt, updatedAt)
+
+@access Public
+
+// @route **GET /users/:id**
+
+// @desc Get a user by their username, (_id, username, createdAt, updatedAt)
+
+// @access Public
+
+// @route **POST /users/register**
+
+// @desc Register new user, body needs (email, username, password)
+
+// @access Public
+
+// @route **POST** **/auth/login**
+
+// @desc Login Autheniticate user, body needs (username, password)
+
+// @access Public
+
+// @route **GET /auth/user**
+
+// @desc Get all user data by jwt token
+
+// @access Private
 
 ## Codebase
 
@@ -66,7 +101,7 @@ docker ps
 
 Node
 
-Start node development server with nodemon
+Start node development server with nodemon on [http://localhost:5000/](http://localhost:5000/)
 
 ```bash
 (backend) nodemon server
