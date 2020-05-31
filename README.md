@@ -1,4 +1,5 @@
-# Housing Helper
+
+![https://github.com/devalparikh/housinghelper/blob/master/public/Group%202.png?raw=true](https://github.com/devalparikh/housinghelper/blob/master/public/Group%202.png?raw=true)
 
 A simple way to find a roommate and a carpool buddy
 
@@ -8,7 +9,7 @@ A simple way to find a roommate and a carpool buddy
 
 ---
 
-Find 3rd party housing and filter housing posts by company, location, and price.(helps commuting etc)
+Find 3rd party housing and filter housing posts by company, location, and price.
 
 ## Built With
 
