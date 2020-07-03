@@ -48,18 +48,18 @@ export const getProfile = token => {
       })
 }
 
-// export const getProfilePost = user => {
-//     return axios
-//         .get(apiURL + '/posts/byuserid/'+user)
-//         .then(res => {
-//             console.log('getting ' + user + "'s post")
-//             return res.data
-//         })
-//         .catch(err => {
-//             alert(err.response.data.msg)
-//             console.log(err.response.data)
-//         })
-// }
+export const getProfilePost = user => {
+    return axios
+        .get(apiURL + '/posts/byuserid/'+user)
+        .then(res => {
+            console.log('getting ' + user + "'s post")
+            return res.data
+        })
+        .catch(err => {
+            alert(err.response.data.msg)
+            console.log(err.response.data)
+        })
+}
 
 // export const getAllPosts = user => {
 //     return axios

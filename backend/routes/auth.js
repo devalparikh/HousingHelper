@@ -2,6 +2,8 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const auth = require('./middleware/auth')
+var ObjectId = require('mongodb').ObjectID;
+let Post = require('../models/post.model');
 let User = require('../models/user.model');
 require('dotenv').config();
 
@@ -60,6 +62,59 @@ router.get('/user', auth, async (req, res) => {
     }
   });
 
+// @route POST /auth/create
+// @desc Creates a new post
+// @access Private
+router.post('/create', auth, async (req, res) => {
+  const newPost = new Post({
+    username: req.body.username,
+    user_id: ObjectId(req.body.user_id),
+    state: req.body.state,
+    city: req.body.city,
+    company: req.body.company,
+    privateBedroom: req.body.privateBedroom,
+    privateBathroom: req.body.privateBathroom,
+    rentPrice: req.body.rentPrice,
+    moreInfo: req.body.moreInfo,
+  })
+  
+  User.findById(newPost.user_id)
+    .then((user) => {
+      if(user) {
+        newPost.save()
+          .then(() => res.json('Post added!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      } else {
+          // user_id not found in users
+          res.status(400).json('Error: user id ' + newPost.user_id + ' not found.');
+      }
+    })
+    // user_id not found in users
+    .catch(err => res.status(400).json('Error: ' + err));
+  
+});
+
+// @route DELETE /auth/delete
+// @desc Creates a new post
+// @access Private
+router.post('/delete', auth, async (req, res) => {
+  const postID = req.body.postID;
+  
+  Post.findById(postID)
+    .then((post) => {
+      if(post) {
+        post.deleteOne()
+          .then(() => res.json('Post deleted!'))
+          .catch(err => res.status(400).json('Error: ' + err));
+      } else {
+          // user_id not found in users
+          res.status(400).json('Error: post id ' + postID + ' not found.');
+      }
+    })
+    // user_id not found in users
+    .catch(err => res.status(400).json('Error: ' + err));
+  
+});
 
 
 module.exports = router;

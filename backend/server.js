@@ -32,8 +32,9 @@ connection.once('open', () => {
 // const postRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/posts');
 
-// app.use('/posts', postRouter);
+app.use('/posts', postRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 
