@@ -25,6 +25,14 @@ const userSchema = new Schema({
     required: true,
     minlength: 3,
   },
+  incoming_requests: {
+    type: [Object],
+    required: true
+  },
+  outgoing_requests: {
+    type: [Object],
+    required: true
+  }
 }, {
   timestamps: true,
 });

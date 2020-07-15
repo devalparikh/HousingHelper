@@ -84,8 +84,8 @@ export default class SignUpPage extends Component {
 
       })
       .catch(err => {
-          this.changeFormMessage(err.response.data.msg)
-          console.log(err.response.data.msg)
+          console.log(err)
+          // this.changeFormMessage(err.response.data.msg)
       });
 
 }

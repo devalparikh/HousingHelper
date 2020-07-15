@@ -15,14 +15,14 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json({msg: err})); // catches errors and returns err
 });
 
-// @route GET /users/:id
+// @route GET /users/user/:id
 // @desc Get a user by their username
 // @access Public
 router.route('/user/:id').get((req, res) => {
   User.findById(req.params.id) // find() returns promise
     .select('-password')
     .select('-email')
-    .then(user => res.json({ username: user.username, createdAt: user.createdAt })) // returns users
+    .then(user => res.json(user)) // returns users
     .catch(err => res.status(400).json({msg: err})); // catches errors and returns err
 });
 
@@ -34,6 +34,8 @@ router.route('/register').post((req, res) => {
     email: req.body.email,
     username: req.body.username,
     password: req.body.password,
+    incoming_requests: [],
+    outgoing_requests: []
   }
 
   User.findOne({

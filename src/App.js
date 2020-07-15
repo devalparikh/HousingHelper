@@ -16,6 +16,7 @@ import NewPostPage from './components/NewPostPage'
 import LoginPage from './components/LoginPage'
 import SignUpPage from './components/SignUpPage'
 import ProfilePage from './components/ProfilePage'
+import OthersProfilePage from './components/OthersProfilePage'
 import HomePage from './components/HomePage'
 import LandingPage from './components/LandingPage'
 import Drawer from '@material-ui/core/Drawer';
@@ -212,6 +213,7 @@ export default function App() {
         <Route path="/new" exact component={NewPostPage} />
         <Route path="/login" exact component={LoginPage} />
         <Route path="/signup" exact component={SignUpPage} />
+        <Route path="/user/:id" component={OthersProfilePage} />
         {localStorage.usertoken ? <Route path="/profile" exact component={ProfilePage} /> : <Route path="/profile" exact component={LoginPage} />}
         {localStorage.usertoken ? <Route path="/" exact component={HomePage} /> : <Route path="/" exact component={LandingPage} />}
         

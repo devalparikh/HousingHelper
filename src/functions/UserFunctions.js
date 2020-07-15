@@ -61,18 +61,37 @@ export const getProfilePost = user => {
         })
 }
 
-// export const getAllPosts = user => {
-//     return axios
-//         .get(apiURL + '/posts/')
-//         .then(res => {
-//             console.log('getting all post')
-//             return res.data
-//         })
-//         .catch(err => {
-//             alert(err.response.data.msg)
-//             console.log(err.response.data)
-//         })
-// }
+export const getAllPosts = in_params => {
+
+    return axios
+        .get(apiURL + '/posts/', {
+          // params: in_params
+        })
+        .then(res => {
+            console.log('getting all post')
+            return res.data
+        })
+        .catch(err => {
+            alert(err.response.data.msg)
+            console.log(err.response.data)
+        })
+}
+
+export const getAllUsers = () => {
+
+  return axios
+      .get(apiURL + '/users/', {
+        // params: in_params
+      })
+      .then(res => {
+          console.log('getting all users')
+          return res.data
+      })
+      .catch(err => {
+          alert(err.response.data.msg)
+          console.log(err.response.data)
+      })
+}
 
 // export const editPost = (token, post_id, post) => {
 //     return axios
@@ -103,3 +122,30 @@ export const getProfilePost = user => {
 //         window.location = '/';
 //       })
 // }
+
+export const createMatchRequest = (postID, username) => {
+  return axios
+      .post(apiURL + '/auth/match/create', {postID: postID, reqUS: username}, {headers: { 'x-auth-token': `${localStorage.usertoken}` }})
+      .then(res => {
+          console.log('Creating Match Request for ' + postID)
+          return res.data
+      })
+      .catch(err => {
+          alert(err.response.data.msg)
+          console.log(err.response.data)
+      })
+}
+
+export const deletePost = (postID, token) => {
+  return axios
+    .post(apiURL + '/auth/delete', {postID: postID}, {
+      headers: { "x-auth-token": `${token}` }
+    })
+    .then(response => {
+      return response.data
+    })
+    .catch(err => {
+      console.log(err)
+      localStorage.removeItem('usertoken')
+    })
+}

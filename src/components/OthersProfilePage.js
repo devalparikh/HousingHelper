@@ -5,7 +5,7 @@ import ProfilePostCard from './ProfilePostCard'
 import axios from 'axios';
 import { apiURL } from '../constant';
 
-export default class ProfilePage extends Component{
+export default class OthersProfilePage extends Component{
     
     constructor(props) {
         super(props)
@@ -18,43 +18,23 @@ export default class ProfilePage extends Component{
       }
 
       componentDidMount() {
-        const token = localStorage.usertoken
-        getProfile(token).then(res => {
+        axios.get(apiURL + '/users/user/'+this.props.match.params.id)
+          .then(res => {
+            console.log(res)
             this.setState({
-                username: res.username,
-                user_id: res._id,
-                joined: new Date(res.createdAt).toLocaleDateString(),
-            });
-        })
+                username: res.data.username,
+                joined: new Date(res.data.createdAt).toLocaleDateString(),
+                user_id: this.props.match.params.id
+            })   
+          })
         .catch(err => {
             console.log(err);
-            window.location = '/';
+            // window.location = '/';
         })
       }
 
     
     render() {
-
-        let cardMarginLeft = "16px"
-        let cardMarginRight = "0px"
-        const mediaQuery = window.matchMedia('(min-width: 768px)');
-        if (mediaQuery.matches) {
-            console.log('desk')
-            cardMarginLeft = "116px"
-            cardMarginRight = "100px"
-        }
-        mediaQuery.addListener((mq) => {
-        if (mq.matches) {
-            console.log('desk')
-            cardMarginLeft = "116px"
-            cardMarginRight = "100px"
-        }
-        });
-
-        const cardStyleMarg = {
-            marginLeft: cardMarginLeft,
-            marginRight: cardMarginRight
-        }
 
         return (
             <div>
@@ -71,25 +51,14 @@ export default class ProfilePage extends Component{
 
                       </div>
                   </Grid>
-
                   <Grid item xs={12} sm={12}>
-                      <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>About</p></center>
-
-                      <div className="normal-card" style={cardStyleMarg}>
-                          
-                          <Grid container justify="center" spacing={3}>
-                              <p>hi</p>
-                          </Grid>
-
-                      </div>
+                    <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Posts</p></center>
                   </Grid>
-                  
                 </Grid>
 
+                {/* TODO: Make others post cards - has same format as home page cards IF not current user */}
+                {/* <ProfilePostCard user_id={this.state.user_id}></ProfilePostCard> */}
 
-                <ProfilePostCard user_id={this.state.user_id}></ProfilePostCard>
-                
-                
                 
             </div>
         )

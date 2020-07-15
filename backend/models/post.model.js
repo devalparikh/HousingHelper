@@ -42,6 +42,10 @@ const userSchema = new Schema({
     type: String,
     required: true 
   },
+  requests: {
+    type: [Object],
+    required: true
+  },
 }, {
   timestamps: true,
 });

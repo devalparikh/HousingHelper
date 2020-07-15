@@ -12,7 +12,7 @@ require('dotenv').config();
 // @desc Gets all Posts
 // @access Public
 router.route('/').get((req, res) => {
-  Post.find() // find() returns promise
+  Post.find().sort([['createdAt', -1]]) // find() returns promise
     .then(posts => res.json(posts)) // returns Posts
     .catch(err => res.status(400).json({msg: err})); // catches errors and returns err
 });
