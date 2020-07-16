@@ -5,9 +5,10 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 // Configure env vars in env file
-require('dotenv').config({ path: '.env' });
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -39,6 +40,14 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 
 app.get('/', (req, res) => res.send('hello'));
+
+if(process.env.NODE_ENV === 'production') {
+    // Serve React Application
+    app.use(express.static('./../build'));
+    app.get('/*', (req, res) => {
+        res.sendFile(path.join(__dirname, './../build', 'index.html')); // Relative Path
+    })
+}
 
 app.listen(port, () => {
     // Console log the server port
