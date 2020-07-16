@@ -39,7 +39,9 @@ app.use('/posts', postRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 
-app.get('/', (req, res) => res.send('hello'));
+// app.get('/', (req, res) => res.send('hello'));
+
+
 
 if(process.env.NODE_ENV === 'production') {
     // Serve React Application
