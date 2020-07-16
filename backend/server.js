@@ -41,6 +41,12 @@ app.use('/auth', authRouter);
 
 // app.get('/', (req, res) => res.send('hello'));
 
+const root = require('path').join(__dirname, 'build')
+    app.use(express.static(root));
+    app.get("*", (req, res) => {
+        res.sendFile('index.html', { root });
+    })
+
 if(process.env.NODE_ENV === 'production') {
     // Serve React Application
     const root = require('path').join(__dirname, 'build')
