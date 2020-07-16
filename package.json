@@ -17,7 +17,13 @@
     "react-number-format": "^4.4.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "us-state-codes": "^1.1.2"
+    "us-state-codes": "^1.1.2",
+    "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.15"
   },
   "scripts": {
     "predeploy": "npm run build",
