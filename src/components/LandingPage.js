@@ -9,9 +9,17 @@ import usc from 'us-state-codes';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import FeedPostCard from './FeedPostCard'
 
+const temp_companies = [
+    {"name": "Facebook"},
+    {"name": "Amazon"},
+    {"name": "Apple"},
+    {"name": "Netflix"},
+    {"name": "Google"},
+]
 
-export default class LandingPage extends Component{
+export default class HomePage extends Component{
     
     constructor(props) {
         super(props)
@@ -20,6 +28,9 @@ export default class LandingPage extends Component{
             selected_state_id: "",
             selected_state_name: "",
             selected_city_id: "",
+            selected_city_name: "",
+            company: "",
+
             total_covid: [],
             non: "n/a",
 
@@ -29,101 +40,111 @@ export default class LandingPage extends Component{
     onChangeUserState(value) {
         if(value) {
             this.setState({selected_state_id: value.id, selected_state_name: value.name})
-            fetch('https://covidtracking.com/api/states')
-            .then(res => res.json())
-            .then((data) => {
+        } else {
+            this.setState({selected_state_id: "", selected_state_name: ""})
+            // Also reset the city ...
+            // let city_input = document.getElementById("user-city");
+            // console.log(city_input.value)
+            // city_input.value = 
+            // this.setState({selected_city_id: "", selected_city_name: ""})
 
-            for(var i = 0; i < data.length; i++) {
-                if(data[i].state === usc.getStateCodeByStateName(value.name)) {
-                    this.setState({total_covid: [data[i].state, data[i].totalTestResults, data[i].recovered, data[i].hospitalizedCurrently, data[i].death]})
-                    console.log(data[i])
-                }
-            }
-            })
-            .catch(console.log)
         }
         
     }
+
+    onChangeUserCity(value) {
+        if(value) {
+            this.setState({selected_city_id: value.id, selected_city_name: value.name})
+        } else {
+            this.setState({selected_city_id: "", selected_city_name: ""})
+        }
+    }
+
+    onChangeCompany(value) {
+        console.log(value)
+        if(value) {
+            this.setState({company: value.name})
+        } else {
+            this.setState({company: ""})
+        }
+    }
     
     render() {
-    console.log()
+
     return (
       <div>
-        <Grid container style={{flexGrow: 1, marginTop: 40}} spacing={2}>
+        <Grid container style={{flexGrow: 1, marginTop: 40, maxWidth: "100%"}} spacing={2}>
+
             <Grid item xs={12} sm={12}>
+                <div className="normal-card" style={{marginLeft: "16px",}}>
+                    
                 <Grid container style={{marginBottom:10}} justify="center" spacing={3}>
-                <h2>Landing Page</h2>
-                </Grid>
-                
+                    <p style={{fontWeight:900, fontSize:50, color:'#444444'}}>Home</p> 
+                </Grid> 
+
+                </div>
+            </Grid>
+            <Grid item xs={12} sm={12}>
+                <div className="normal-card" style={{marginLeft: "16px",}}>
+                    
+                <Grid container style={{marginBottom:10}} justify="center" spacing={3}>
+                    <h2 className="big-text">Filters</h2>
+                </Grid> 
                 <Grid container justify="center" spacing={3}>
-                
-                <Autocomplete
-                    id="user-state"
-                    options={csc.getStatesOfCountry(csc.getCountryByCode("US").id)}
-                    onChange={(event, value) =>  this.onChangeUserState(value)}
-                    getOptionLabel={(option) => option.name}
-                    style={{ width: 300, height: 100 }}
-                    renderInput={(params) => <TextField {...params} label="State" variant="outlined" />}
-                />
+        
+                    <Autocomplete
+                        id="user-state"
+                        options={csc.getStatesOfCountry(csc.getCountryByCode("US").id)}
+                        onChange={(event, value) =>  this.onChangeUserState(value)}
+                        getOptionLabel={(option) => option.name}
+                        style={{ width: 300, height: 100 }}
+                        renderInput={(params) => <TextField {...params} label="State" variant="outlined" />}
+                    />
+                    </Grid>
+                    <Grid container justify="center" spacing={3}>
+                    <Autocomplete
+                        id="user-city"
+                        options={csc.getCitiesOfState(this.state.selected_state_id)}
+                        // onChange={(event, value) => this.setState({selected_city_id: value.id})}
+                        onChange={(event, value) =>  this.onChangeUserCity(value)}
+                        getOptionLabel={(option) => option.name}
+                        style={{ width: 300, height: 100 }}
+                        renderInput={(params) => <TextField {...params} label="City" variant="outlined" />}
+                    />
+                    <Grid container justify="center" spacing={3} style={{marginBottom: "10px",}}>
+                              <Autocomplete
+
+                                  options={temp_companies}
+                                //   value={this.state.company}
+                                  name="company"
+                                  onChange={(event, value) =>  this.onChangeCompany(value)}
+                                  getOptionLabel={(option) => option.name}
+                                  style={{ width: 300, height: 100 }}
+                                  renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
+                              />
+                          </Grid>
                 </Grid>
                 <Grid container justify="center" spacing={3}>
-                {/* <Autocomplete
-                    id="user-city"
-                    options={csc.getCitiesOfState(this.state.selected_state_id)}
-                    // onChange={(event, value) => this.setState({selected_city_id: value.id})}
-                    getOptionLabel={(option) => option.name}
-                    style={{ width: 300, height: 100 }}
-                    renderInput={(params) => <TextField {...params} label="City" variant="outlined" />}
-                /> */}
+                    { this.state.company !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#444444'}}>{this.state.company} @&nbsp;</p> : <p></p> }
+                    { this.state.selected_city_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#444444', marginBottom:'-20px'}}>{this.state.selected_city_name},&nbsp;</p> : <p></p> }
+                    { this.state.selected_state_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#444444'}}>{this.state.selected_state_name}</p> : <p></p> }
                 </Grid>
-                {/* <Grid container justify="center" spacing={3}>
-                    <p>{this.state.selected_state_id}</p>
-                </Grid>
-                <Grid container justify="center" spacing={3}>
-                    <p>{this.state.selected_city_id}</p>
-                </Grid> */}
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#444444'}}>{this.state.total_covid[0]}</p> : <p></p> }
-                </Grid>
+
+                </div>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-            <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p>Total Cases:</p> : <p></p> }
-                </Grid>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#3f51b5'}}>{this.state.total_covid[1]!== null ? this.state.total_covid[1] : this.state.non}</p> : <p></p> }
-                </Grid>
-            </Grid>
 
-            <Grid item xs={12} sm={6}>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p>Total Recovered:</p> : <p></p> }
-                </Grid>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#3fb57a'}}>{this.state.total_covid[2] !== null ? this.state.total_covid[2] : this.state.non}</p> : <p></p> }
-                </Grid>
-            </Grid>
 
-            <Grid item xs={12} sm={6}>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p>Curently Hospitalized:</p> : <p></p> }
-                </Grid>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#de9554'}}>{this.state.total_covid[3]!== null ? this.state.total_covid[3] : this.state.non}</p> : <p></p> }
-                </Grid>
-            </Grid>
+            <Grid container style={{flexGrow: 1, marginTop: 20, maxWidth: "100%",}} spacing={2}>
 
-            <Grid item xs={12} sm={6}>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p>Total Dead:</p> : <p></p> }
-                </Grid>
-                <Grid container justify="center" spacing={3}>
-                    { this.state.selected_state_name !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#b53f6a'}}>{this.state.total_covid[4]!== null ? this.state.total_covid[4] : this.state.non}</p> : <p></p> }
+
+                <Grid item xs={12} sm={12}>
+                    <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Posts</p></center>
                 </Grid>
             </Grid>
-            
         </Grid>
+        <FeedPostCard state={this.state.selected_state_name} city={this.state.selected_city_name} company={this.state.company}></FeedPostCard>
+
 
       </div>
     )

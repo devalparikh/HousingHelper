@@ -40,18 +40,6 @@ export default class HomePage extends Component{
     onChangeUserState(value) {
         if(value) {
             this.setState({selected_state_id: value.id, selected_state_name: value.name})
-            fetch('https://covidtracking.com/api/states')
-            .then(res => res.json())
-            .then((data) => {
-
-            for(var i = 0; i < data.length; i++) {
-                if(data[i].state === usc.getStateCodeByStateName(value.name)) {
-                    this.setState({total_covid: [data[i].state, data[i].totalTestResults, data[i].recovered, data[i].hospitalizedCurrently, data[i].death]})
-                    console.log(data[i])
-                }
-            }
-            })
-            .catch(console.log)
         } else {
             this.setState({selected_state_id: "", selected_state_name: ""})
             // Also reset the city ...

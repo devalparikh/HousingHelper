@@ -34,18 +34,22 @@ export default class FeedPostCard extends Component{
                 console.log(res)
                 this.setState({posts: res, filtered_posts: res})
             })
-        
+
+
         const token = localStorage.usertoken
-        getProfile(token).then(res => {
-            this.setState({
-                user_id: res._id,
-                username: res.username
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            window.location = '/';
-        })    
+        console.log(token)
+        if(token) {
+            getProfile(token).then(res => {
+                this.setState({
+                    user_id: res._id,
+                    username: res.username
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                // window.location = '/login';
+            }) 
+        }
       }
 
       componentDidUpdate(prevProps) {
