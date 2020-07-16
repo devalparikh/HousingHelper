@@ -228,6 +228,8 @@ export default class ProfilePage extends Component{
                 <Grid item xs={12} sm={grid_sm}>
                     <Grid>
                         <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Requests</p></center>
+                        <center><p style={{marginTop: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto"}} className="small-text">Accept or Decline to share your personal email to interested requesters.</p></center>
+
                     </Grid>
 
                     {

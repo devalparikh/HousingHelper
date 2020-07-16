@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import csc from 'country-state-city';
 import usc from 'us-state-codes';
 
+import {Button} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -73,9 +74,49 @@ export default class HomePage extends Component{
 
     return (
       <div>
+          <div className="bg-landing" style={{backgroundColor:"#41455a", height:"40rem", width:"100%"}}>
+            <Grid container style={{flexGrow: 1, maxWidth: "100%"}} spacing={2}>
+                <Grid item xs={12} sm={6}>
+                    <p style={{margin: "80px 15px -20px 100px",fontWeight:200, fontSize:50, color:'#444444'}}>Find your <a style={{fontWeight:900}}>home</a> away from home<a style={{fontWeight:900}}>.</a></p> 
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Grid container style={{marginBottom:10, marginTop:40}} justify="center" spacing={3}>
+                        <div className="normal-card" style={{marginLeft: "16px", minWidth: "300px", backgroundColor: "#fffffff7"}}>
+
+                            <div className="card-body">
+                                <center>
+                                <p style={{fontWeight:900, fontSize:50, color:'#444444'}}>Sign Up</p> 
+                                <form onSubmit={this.onSubmit}>
+                                <div className="form-group">
+                                    <TextField style={{width: "250px"}} label="Email" id="email" type="email" variant="outlined" value={this.state.email} onChange={this.onChangeEmail} required/>
+                                </div>
+                                <div className="form-group">
+                                    <TextField style={{width: "250px"}} label="Username" id="username" type="username" variant="outlined" value={this.state.username} onChange={this.onChangeUsername} required/>
+                                </div>
+                                <div className="form-group"> 
+                                    <TextField style={{width: "250px"}} label="Password" id="password" type="password" variant="outlined" value={this.state.password} onChange={this.onChangePassword} required/>
+                                </div>
+                                
+                                <div className="form-group">
+                                <br/>
+                                <Button type="submit" variant="contained" color="primary" disabled={this.state.username === "" || this.state.password === ""}>Sign Up</Button>
+                                </div>
+                                <label className="small-text error">{this.state.formMessage}</label>
+                                <br/>
+                                <label className="small-text">Already have an account?</label> <a href="/login" className="small-text" style={{ color: "#5a65ff" }}>Login</a>
+                                <br/>
+                                {/* <a href="/" className="small-text" style={{color: "#5a65ff" }}>Home</a> */}
+                                </form>
+                                </center>
+                            </div>
+                        </div>
+                    </Grid>
+                </Grid>
+            </Grid>
+          </div>
         <Grid container style={{flexGrow: 1, marginTop: 40, maxWidth: "100%"}} spacing={2}>
 
-            <Grid item xs={12} sm={12}>
+            {/* <Grid item xs={12} sm={12}>
                 <div className="normal-card" style={{marginLeft: "16px",}}>
                     
                 <Grid container style={{marginBottom:10}} justify="center" spacing={3}>
@@ -83,9 +124,9 @@ export default class HomePage extends Component{
                 </Grid> 
 
                 </div>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={12}>
-                <div className="normal-card" style={{marginLeft: "16px",}}>
+                <div className="normal-card" style={{marginLeft: "16px", marginTop: "220px"}}>
                     
                 <Grid container style={{marginBottom:10}} justify="center" spacing={3}>
                     <h2 className="big-text">Filters</h2>

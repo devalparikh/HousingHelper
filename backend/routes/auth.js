@@ -96,7 +96,7 @@ router.post('/create', auth, async (req, res) => {
 });
 
 // @route POST /auth/delete
-// @desc Creates a new post
+// @desc deletes a post
 // @access Private
 router.post('/delete', auth, async (req, res) => {
   const postID = req.body.postID;
