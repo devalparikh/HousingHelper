@@ -41,14 +41,14 @@ app.use('/auth', authRouter);
 
 // app.get('/', (req, res) => res.send('hello'));
 
-// app.use(express.static('./../build'));
+app.use(express.static('./../build'));
     app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, './../build', 'index.html')); // Relative Path
     })
 
 if(process.env.NODE_ENV === 'production') {
     // Serve React Application
-    // app.use(express.static('./../build'));
+    app.use(express.static('./../build'));
     app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, './../build', 'index.html')); // Relative Path
     })
