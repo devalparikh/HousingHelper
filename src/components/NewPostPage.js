@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { getProfile } from '../functions/UserFunctions';
+import { getProfile, getCompanies } from '../functions/UserFunctions';
 
 // Search Bar
 
 import Grid from '@material-ui/core/Grid';
 import csc from 'country-state-city';
 
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import NumberFormat from 'react-number-format';
 import { 
     Button,
@@ -25,13 +25,14 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
   
+  const filter = createFilterOptions();
 
 const temp_companies = [
-    {"name": "Facebook"},
-    {"name": "Amazon"},
-    {"name": "Apple"},
-    {"name": "Netflix"},
-    {"name": "Google"},
+    {"companyName": "Facebook"},
+    {"companyName": "Amazon"},
+    {"companyName": "Apple"},
+    {"companyName": "Netflix"},
+    {"companyName": "Google"},
 ]
 
 function NumberFormatCustom(props) {
@@ -63,6 +64,7 @@ export default class NewPostPage extends Component{
         super(props)
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeCompany = this.onChangeCompany.bind(this);
 
         this.state = {
             authorized: 0,
@@ -79,12 +81,14 @@ export default class NewPostPage extends Component{
             non: "n/a",
             price: "",
             
+            all_companies: [],
 
             state: this.selected_state_name,
             city: this.selected_state_name,
             privateBathroom: false,
             privateBedroom: false,
             company: "",
+            company_typing: "",
             moreInfo: ""
         }
       }  
@@ -97,6 +101,18 @@ export default class NewPostPage extends Component{
                 username: res.username,
                 user_id: res._id,
                 authorized: 1
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            this.setState({
+                authorized: 0
+            })
+        })
+        getCompanies().then(res => {
+            console.log(res)
+            this.setState({
+                all_companies: res,
             })
         })
         .catch(err => {
@@ -130,10 +146,17 @@ export default class NewPostPage extends Component{
         }
     }
 
-    onChangeCompany(value) {
+    onChangeCompany = (event, value) => {
         console.log(value)
         if(value) {
-            this.setState({company: value})
+            if (typeof value === 'string') {
+                console.log(value)
+                this.setState({company: value.companyName})
+            } else if (value && value.inputValue) {
+                this.setState({company: value.inputValue})
+            } else {
+                this.setState({company: value.companyName})
+            }
         }
     }
 
@@ -154,12 +177,20 @@ export default class NewPostPage extends Component{
     
     onSubmit(e) {
         e.preventDefault()
+        let final_company = this.state.company
+        if(this.state.company && this.state.company.companyName) {
+            final_company = this.state.company.companyName
+        }
+        if(this.state.company_typing) {
+            final_company = this.state.company_typing
+        }
+        
         const newPostReqBody = {
             username: this.state.username,
             user_id: this.state.user_id,
             state: this.state.selected_state_name,
             city: this.state.selected_city_name,
-            company: this.state.company.name,
+            company: final_company,
             privateBathroom: this.state.privateBathroom,
             privateBedroom: this.state.privateBedroom,
             rentPrice: this.state.price,
@@ -180,6 +211,11 @@ export default class NewPostPage extends Component{
             .catch(err => {
                 this.changeFormMessage(err.response.data.msg)
                 console.log(err.response.data.msg)
+                if(this.state.company && this.state.company.companyName === "") {
+                    this.changeFormMessage(err.response.data.msg + " Please add new Company")
+                } else if(this.state.company === "") {
+                    this.changeFormMessage(err.response.data.msg + " Please add new Company")
+                }
             });
     }
     
@@ -294,12 +330,37 @@ export default class NewPostPage extends Component{
                           
                           <Grid container justify="center" spacing={3} style={{marginBottom: "10px",}}>
                               <Autocomplete
-
-                                  options={temp_companies}
+                                  freeSolo
+                                  options={this.state.all_companies}
                                   value={this.state.company}
                                   name="company"
-                                  onChange={(event, value) =>  this.onChangeCompany(value)}
-                                  getOptionLabel={(option) => option.name}
+                                  onChange={this.onChangeCompany}
+                                  onInputChange={(event, value) => {this.setState({company_typing: value})}}
+                                  filterOptions={(options, params) => {
+                                    const filtered = filter(options, params);
+                                    
+                                    // Suggest the creation of a new value
+                                    if (params.inputValue !== '') {
+                                      filtered.push({
+                                        inputValue: params.inputValue,
+                                        companyName: `Add "${params.inputValue}"`,
+                                      });
+                                    }
+                            
+                                    return filtered;
+                                  }}
+                                  getOptionLabel={(option) => {
+                                    // Value selected with enter, right from the input
+                                    if (typeof option === 'string') {
+                                      return option;
+                                    }
+                                    // Add "xxx" option created dynamically
+                                    if (option.companyName) {
+                                      return option.companyName;
+                                    }
+                                    // Regular option
+                                    return option.inputValue;
+                                  }}
                                   style={{ width: 300, height: 100 }}
                                   renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
                               />
@@ -334,9 +395,11 @@ export default class NewPostPage extends Component{
                   
               </Grid>
               <center>
+                <label className="small-text error">{this.state.formMessage}</label>
+              </center>
+              <center>
                   <Button type="submit" className="post-button" style={{backgroundColor:"#454c71", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}}>Post Housing</Button>
               </center>
-              <label className="small-text error">{this.state.formMessage}</label>
               </form>
               <Snackbar open={this.state.posted} autoHideDuration={6000}>
                 <Alert severity="success">

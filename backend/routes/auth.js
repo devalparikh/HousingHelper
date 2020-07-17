@@ -5,6 +5,7 @@ const auth = require('./middleware/auth')
 var ObjectId = require('mongodb').ObjectID;
 let Post = require('../models/post.model');
 let User = require('../models/user.model');
+let Company = require('../models/company.model');
 require('dotenv').config();
 
 // @route POST /auth/login
@@ -83,15 +84,30 @@ router.post('/create', auth, async (req, res) => {
     .then((user) => {
       if(user) {
         newPost.save()
-          .then(() => res.json('Post added!'))
-          .catch(err => res.status(400).json('Error: ' + err));
+          .then(() => {
+            Company.findOne({
+              companyNameLowerCase: newPost.company.toLowerCase()
+            })
+            .then(company => {
+              if(!company) {
+                const newCompany = new Company({
+                  companyName: newPost.company,
+                  companyNameLowerCase: newPost.company.toLowerCase()
+                });
+                newCompany.save();
+              }
+            })
+            .catch(err => res.status(400).json({msg: 'Error: ' + err}));
+            res.json('Post added!')
+          })
+          .catch(err => res.status(400).json({msg: 'Error: ' + err}));
       } else {
           // user_id not found in users
-          res.status(400).json('Error: user id ' + newPost.user_id + ' not found.');
+          res.status(400).json({msg: 'Error: user id ' + newPost.user_id + ' not found.'});
       }
     })
     // user_id not found in users
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({msg: 'Error: ' + err}));
   
 });
 

@@ -34,10 +34,14 @@ connection.once('open', () => {
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/posts');
+const companyRouter = require('./routes/companies');
+
 
 app.use('/posts', postRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/companies', companyRouter);
+
 
 // app.get('/', (req, res) => res.send('hello'));
 

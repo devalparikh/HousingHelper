@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 
+import { getCompanies } from '../functions/UserFunctions';
+
+
 // Search Bar
 
 import Grid from '@material-ui/core/Grid';
@@ -31,11 +34,27 @@ export default class HomePage extends Component{
             selected_city_name: "",
             company: "",
 
-            total_covid: [],
+            all_companies: [],
+
             non: "n/a",
 
         }
       }  
+
+    componentDidMount(){
+        getCompanies().then(res => {
+            console.log(res)
+            this.setState({
+                all_companies: res,
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            this.setState({
+                authorized: 0
+            })
+        })
+    }
       
     onChangeUserState(value) {
         if(value) {
@@ -63,7 +82,7 @@ export default class HomePage extends Component{
     onChangeCompany(value) {
         console.log(value)
         if(value) {
-            this.setState({company: value.name})
+            this.setState({company: value.companyName})
         } else {
             this.setState({company: ""})
         }
@@ -114,11 +133,11 @@ export default class HomePage extends Component{
                     <Grid container justify="center" spacing={3} style={{marginBottom: "10px",}}>
                               <Autocomplete
 
-                                  options={temp_companies}
+                                  options={this.state.all_companies}
                                 //   value={this.state.company}
                                   name="company"
                                   onChange={(event, value) =>  this.onChangeCompany(value)}
-                                  getOptionLabel={(option) => option.name}
+                                  getOptionLabel={(option) => option.companyName}
                                   style={{ width: 300, height: 100 }}
                                   renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
                               />

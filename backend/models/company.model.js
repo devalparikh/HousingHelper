@@ -9,7 +9,13 @@ const userSchema = new Schema({
   companyName: {
     type: String,
     required: true,
-}, {
+  },
+  companyNameLowerCase: {
+    type: String,
+    required: true,
+  }
+}, 
+{
   timestamps: true,
 });
 

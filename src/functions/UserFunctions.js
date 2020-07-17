@@ -163,3 +163,19 @@ export const acceptRequester = (body, token) => {
       // localStorage.removeItem('usertoken')
     })
 }
+
+export const getCompanies = () => {
+
+  return axios
+      .get(apiURL + '/companies/', {
+        // params: in_params
+      })
+      .then(res => {
+          console.log('getting all companies')
+          return res.data
+      })
+      .catch(err => {
+          alert(err.response.data.msg)
+          console.log(err.response.data)
+      })
+}
