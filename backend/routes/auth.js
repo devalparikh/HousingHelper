@@ -145,31 +145,31 @@ router.post('/match/create', auth, async (req, res) => {
 
         // TODO: Add to users array of requesters and sent requests
         
-        User.findById(requester)
-        .then(user => {
-          if(user) {
-            user.outgoing_requests.push(new_request)
-            User.updateOne({_id: requester}, user)
-            .then(console.log('User updated'))
-            .catch(err => console.log(err));
-          } else {
-            res.status(400).json('Error: requester does not exist.')
-          }
-        })
-        .catch(err => console.log(err));
+        // User.findById(requester)
+        // .then(user => {
+        //   if(user) {
+        //     user.outgoing_requests.push(new_request)
+        //     User.updateOne({_id: requester}, user)
+        //     .then(console.log('User updated'))
+        //     .catch(err => console.log(err));
+        //   } else {
+        //     res.status(400).json('Error: requester does not exist.')
+        //   }
+        // })
+        // .catch(err => console.log(err));
 
-        User.findById(poster)
-        .then(user => {
-          if(user) {
-            user.incoming_requests.push(new_request)
-            User.updateOne({_id: poster}, user)
-            .then(console.log('User updated'))
-            .catch(err => console.log(err));
-          } else {
-            res.status(400).json('Error: requester does not exist.')
-          }
-        })
-        .catch(err => console.log(err));
+        // User.findById(poster)
+        // .then(user => {
+        //   if(user) {
+        //     user.incoming_requests.push(new_request)
+        //     User.updateOne({_id: poster}, user)
+        //     .then(console.log('User updated'))
+        //     .catch(err => console.log(err));
+        //   } else {
+        //     res.status(400).json('Error: requester does not exist.')
+        //   }
+        // })
+        // .catch(err => console.log(err));
 
         Post.updateOne({_id: postID}, post)
         .then(res.json('Match created'))
@@ -199,20 +199,48 @@ router.post('/match/accept', auth, async (req, res) => {
         if(post.user_id !== req.user.id) {
           res.status(400).json('Error: not authorized to accept other users posts.');
         }
+
         if(post.requests && post.requests.length > 0) {
           post.requests.forEach(request => {
             if(request.requester === requester) {
-              request.status = "accepted"
               User.findById(post.user_id)
               .then(user => {
                 request.postersEmail = user.email
                 request.username = user.username
+                request.status = "accepted"
+
+                Post.updateOne({_id: postID}, post)
+                .then(res.json('Match accepted'))
+
+
+
+                // Find request from incoming requests array from poster
+                // user.incoming_requests.forEach(incoming_request => {
+                //   if(incoming_request.post === postID) {
+                //     incoming_request = updated_request_object 
+                //   }
+                // });
+                // // Update poster
+                // User.updateOne({_id: post.user_id}, user)
               });
+              // if(updated_request_object) {
+              //   User.findById(requester)
+              //   .then(user => {
+              //     user.outgoing_requests.forEach(outgoing_request => {
+              //       if(outgoing_request.post === postID) {
+              //         outgoing_request = updated_request_object
+              //       }
+              //     });
+              //     // Update requester
+              //     User.updateOne({_id: requester}, user)
+              //   });
+              // }
             }
           });
-          // TODO: update users array of requesters and sent requests
 
-          res.json('Match accepted')
+          // TODO: update users array of requesters and sent requests
+          
+
         } else {
           res.status(400).json('Error: no requests for this post.');
         }
@@ -257,6 +285,8 @@ router.get('/match/accept', auth, async (req, res) => {
     // user_id not found in users
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+// TODO: instead of having match accept get. make a get for all requests under posts and remove requests array from normal get of posts
 
 
 module.exports = router;

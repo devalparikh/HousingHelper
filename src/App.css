@@ -125,6 +125,21 @@ BUTTONS
   background: var(--color-buttons-primary-color, #7881ff);
 }
 
+.post-button-email {
+  background-color: #5eada5;
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 50%;
+  height: 60px;
+  max-width: 255px;
+}
+/* .post-button-email:hover:before {
+  background-color: #5e7aad!important;
+  color: white;
+  content:"Email!"
+} */
+
 
 /*
 

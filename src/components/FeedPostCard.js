@@ -211,7 +211,9 @@ export default class FeedPostCard extends Component{
                                         this.getStatusOfMatchingRequest(post.requests) && this.getStatusOfMatchingRequest(post.requests).status === "accepted"
                                         ?
                                         <center>
-                                            <Button className="post-button" style={{backgroundColor:"#5eada5", color: "white", marginTop: "30px", marginBottom: "30px", width: "50%", height: "60px", maxWidth: "255px"}} disabled>{this.getStatusOfMatchingRequest(post.requests).postersEmail}</Button>
+                                            <Button className="post-button-email" style={{backgroundColor:"#5eada5", color: "white"}}>Matched</Button>
+                                            <p className="small-text">Contact: <a style={{fontWeight: "300", color: "#5c5c5c"}}>{this.getStatusOfMatchingRequest(post.requests).postersEmail}</a></p>
+
                                         </center>
                                         :
                                         this.state.user_id !== post.user_id

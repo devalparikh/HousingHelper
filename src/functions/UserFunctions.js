@@ -149,3 +149,17 @@ export const deletePost = (postID, token) => {
       localStorage.removeItem('usertoken')
     })
 }
+
+export const acceptRequester = (body, token) => {
+  return axios
+    .post(apiURL + '/auth/match/accept', body, {
+      headers: { "x-auth-token": `${token}` }
+    })
+    .then(response => {
+      return response.data
+    })
+    .catch(err => {
+      console.log(err)
+      // localStorage.removeItem('usertoken')
+    })
+}

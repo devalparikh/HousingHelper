@@ -2,11 +2,16 @@ import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 
 import {Button, Snackbar} from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
-import { getProfilePost, getAllUsers, deletePost } from '../functions/UserFunctions';
+import { getProfilePost,
+        getAllUsers,
+        deletePost,
+        acceptRequester } from '../functions/UserFunctions';
 
 import Pagination from '@material-ui/lab/Pagination';
 
@@ -74,6 +79,24 @@ export default class ProfilePage extends Component{
         
     }
 
+    // On accept
+    onAccept(postID, requesterID) {
+        const token = localStorage.usertoken
+        let body = {
+            postID: postID,
+            requester: requesterID
+        }
+        acceptRequester(body, token)
+        .then(res => {
+            console.log(res)
+            window.location = '/profile';
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        
+    }
+
     // Pagination
     handlePageChange(page) {
         this.setState({ currentPage: page })
@@ -121,6 +144,7 @@ export default class ProfilePage extends Component{
         }
 
         const getPendingRequestPost = request => {
+            if(request.status !== "pending") return
             return (
                 <Grid>
                     <div className="normal-card" style={cardStyleMarg}>
@@ -131,6 +155,29 @@ export default class ProfilePage extends Component{
                             <a style={{marginBottom: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto"}} className="small-text">
                                 &nbsp; for post: {request.post}
                             </a>
+                            <IconButton 
+                                style={{marginLeft: "60%", color: "#7cffc3"}} 
+                                onClick={() => { 
+                                    // this.setState({deleted: true}); 
+                                    this.onAccept(request.post, request.requester)
+                                    }} 
+                                aria-label="delete">
+                                
+                                <PersonAddIcon fontSize="small" />
+                            </IconButton>
+
+                            <IconButton 
+                                style={{color: "#ff7c7c"}} 
+                                onClick={() => { 
+                                    // this.setState({deleted: true}); 
+                                    // this.onDelete(post._id)
+                                    }} 
+                                aria-label="delete">
+                                
+                                <PersonAddDisabledIcon fontSize="small" />
+                            </IconButton>
+
+
                         </Grid>
                     </div>
 
@@ -228,7 +275,7 @@ export default class ProfilePage extends Component{
                 <Grid item xs={12} sm={grid_sm}>
                     <Grid>
                         <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Requests</p></center>
-                        <center><p style={{marginTop: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto"}} className="small-text">Accept or Decline to share your personal email to interested requesters.</p></center>
+                        <center><p style={{marginTop: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto"}} className="small-text">Accept or Decline to share your personal email to interested requester.</p></center>
 
                     </Grid>
 
