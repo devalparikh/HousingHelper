@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 
-import {Button, Snackbar} from '@material-ui/core';
+import {Button, Snackbar, Tooltip} from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { getProfilePost,
@@ -155,27 +155,31 @@ export default class ProfilePage extends Component{
                             <a style={{marginBottom: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto"}} className="small-text">
                                 &nbsp; for post: {request.post}
                             </a>
-                            <IconButton 
-                                style={{marginLeft: "60%", color: "#7cffc3"}} 
-                                onClick={() => { 
-                                    // this.setState({deleted: true}); 
-                                    this.onAccept(request.post, request.requester)
-                                    }} 
-                                aria-label="delete">
-                                
-                                <PersonAddIcon fontSize="small" />
-                            </IconButton>
-
-                            <IconButton 
-                                style={{color: "#ff7c7c"}} 
-                                onClick={() => { 
-                                    // this.setState({deleted: true}); 
-                                    // this.onDelete(post._id)
-                                    }} 
-                                aria-label="delete">
-                                
-                                <PersonAddDisabledIcon fontSize="small" />
-                            </IconButton>
+                            <Tooltip title="Accept" aria-label="accept">
+                                <IconButton 
+                                    style={{marginLeft: "60%", color: "#7cffc3"}} 
+                                    onClick={() => { 
+                                        // this.setState({deleted: true}); 
+                                        this.onAccept(request.post, request.requester)
+                                        }} 
+                                    aria-label="accept">
+                                    
+                                    <PersonAddIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                            
+                            <Tooltip title="Decline" aria-label="decline">
+                                <IconButton 
+                                    style={{color: "#ff7c7c"}} 
+                                    onClick={() => { 
+                                        // this.setState({deleted: true}); 
+                                        // this.onDelete(post._id)
+                                        }} 
+                                    aria-label="decline">
+                                    
+                                    <PersonAddDisabledIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
 
 
                         </Grid>

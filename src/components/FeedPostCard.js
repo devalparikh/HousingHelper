@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
-import {Button} from '@material-ui/core'
+import {Button, Tooltip} from '@material-ui/core'
 import { getAllPosts, getProfile, createMatchRequest } from '../functions/UserFunctions';
 
 import Pagination from '@material-ui/lab/Pagination';
@@ -211,7 +211,9 @@ export default class FeedPostCard extends Component{
                                         this.getStatusOfMatchingRequest(post.requests) && this.getStatusOfMatchingRequest(post.requests).status === "accepted"
                                         ?
                                         <center>
-                                            <Button className="post-button-email" style={{backgroundColor:"#5eada5", color: "white"}}>Matched</Button>
+                                            <Tooltip title="Send Email" aria-label="send email">
+                                                <Button href={"mailto:" + this.getStatusOfMatchingRequest(post.requests).postersEmail} className="post-button-email" style={{backgroundColor:"#5eada5", color: "white"}}>Matched</Button>
+                                            </Tooltip>
                                             <p className="small-text">Contact: <a style={{fontWeight: "300", color: "#5c5c5c"}}>{this.getStatusOfMatchingRequest(post.requests).postersEmail}</a></p>
 
                                         </center>
