@@ -10,6 +10,9 @@ import {Button} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import axios from 'axios';
+import { apiURL } from '../constant';
+
 import FeedPostCard from './FeedPostCard'
 
 const temp_companies = [
@@ -24,6 +27,13 @@ export default class HomePage extends Component{
     
     constructor(props) {
         super(props)
+
+        // TODO: make generic component for sign up card
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.changeFormMessage = this.changeFormMessage.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     
         this.state = {
             selected_state_id: "",
@@ -34,6 +44,10 @@ export default class HomePage extends Component{
 
             total_covid: [],
             non: "n/a",
+
+            user: "",
+            email: "",
+            password: ""
 
         }
       }  
@@ -70,6 +84,60 @@ export default class HomePage extends Component{
         }
     }
     
+    onSubmit(e) {
+        e.preventDefault()
+        // Authentication
+        const user = {
+          email: this.state.email,
+          username: this.state.username,
+          password: this.state.password
+        }
+        
+        axios
+          .post(apiURL+'/users/register', {
+              email: user.email,
+              username: user.username,
+              password: user.password
+          })
+          .then(res => {
+              localStorage.setItem('usertoken', res.data.token)
+              window.location = '/profile';
+    
+          })
+          .catch(err => {
+              console.log(err)
+              this.changeFormMessage(err.response.data.msg)
+          });
+    
+    }
+
+    onChangeEmail(e) {
+        this.setState({
+          email: e.target.value,
+          formMessage: '',
+        });
+      }
+    
+      onChangeUsername(e) {
+        this.setState({
+          username: e.target.value,
+          formMessage: '',
+        });
+      }
+    
+      onChangePassword(e) {
+        this.setState({
+          password: e.target.value,
+          formMessage: '',
+        });
+      }
+    
+      changeFormMessage(message) {
+        this.setState({
+          formMessage: message
+        });
+      }
+
     render() {
 
     return (
