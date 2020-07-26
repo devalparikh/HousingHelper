@@ -158,7 +158,7 @@ export default class HomePage extends Component{
 
 
                 <Grid item xs={12} sm={12}>
-                    <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Posts</p></center>
+                    <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px', marginLeft: '16px'}}>Posts</p></center>
                 </Grid>
             </Grid>
         </Grid>

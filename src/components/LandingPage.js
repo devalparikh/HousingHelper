@@ -15,6 +15,11 @@ import { apiURL } from '../constant';
 
 import FeedPostCard from './FeedPostCard'
 
+import InternetConnection from '../Images/LandingPageImages/internet_connect.svg'
+import StressFree from '../Images/LandingPageImages/stressfree.svg'
+import Quick from '../Images/LandingPageImages/quick.svg'
+
+
 const temp_companies = [
     {"name": "Facebook"},
     {"name": "Amazon"},
@@ -140,6 +145,27 @@ export default class HomePage extends Component{
 
     render() {
 
+        // For spacing between sign up card and title on web and mobile 
+        let titleMarginTop = "260px"
+        const mediaQuery = window.matchMedia('(min-width: 1100px)');
+        if (mediaQuery.matches) {
+            console.log('desk')
+            titleMarginTop = "25px"
+
+        }
+        mediaQuery.addListener((mq) => {
+        if (mq.matches) {
+            console.log('desk')
+            titleMarginTop = "25px"
+        }
+        });
+
+        const cardStyleMarg = {
+            marginTop: titleMarginTop,
+            marginLeft: "16px", 
+            textAlign: "center"
+        }
+
     return (
       <div>
           <div className="bg-landing" style={{backgroundColor:"#41455a", height:"40rem", width:"100%"}}>
@@ -182,7 +208,7 @@ export default class HomePage extends Component{
                 </Grid>
             </Grid>
           </div>
-        <Grid container style={{flexGrow: 1, marginTop: 40, maxWidth: "100%"}} spacing={2}>
+        <Grid justify="center" container style={{flexGrow: 1, marginTop: 40, maxWidth: "100%"}} spacing={2}>
 
             {/* <Grid item xs={12} sm={12}>
                 <div className="normal-card" style={{marginLeft: "16px",}}>
@@ -193,8 +219,70 @@ export default class HomePage extends Component{
 
                 </div>
             </Grid> */}
+
+            {/* Landing Info Cards */}
+
+            <Grid item xs={12} sm={12} style={cardStyleMarg}>
+                <div className="" >
+
+                    <Grid container style={{marginBottom:10}} justify="center" spacing={3}>
+                        <p style={{fontWeight:800, fontSize:40, color:'#444444'}}>Why HousingHelper?</p> 
+                    </Grid>
+
+                </div>
+            </Grid>
+
+            <Grid item xs={12} sm={3} style={{marginLeft: "16px"}}>
+                <div className="normal-card">
+                    <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
+                    <img style={{height:"90px"}} src={Quick} alt="Quick"></img>
+                    </Grid>
+                    <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
+                        <p className="big-text">Act Quickly</p>
+                        <p className="small-text" style={{fontWeight: "300", color: "#5c5c5c"}}>Our filtering features allows you to find results faster than ever.</p>
+                    </Grid>
+                </div>
+            </Grid>
+
+            <Grid item xs={12} sm={3} style={{marginLeft: "16px"}}>
+                <div className="normal-card">
+                    <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
+                        <img style={{height:"90px"}} src={StressFree} alt="Stress Free"></img>
+                    </Grid>
+                    <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
+                        <p className="big-text">Stress Less</p>
+                        <p className="small-text" style={{fontWeight: "300", color: "#5c5c5c"}}>Don't wait until the last minute. Use HousingHelper to find housing of town.</p>
+                    </Grid>
+                </div>
+            </Grid>
+
+            <Grid item xs={12} sm={3} style={{marginLeft: "16px"}}>
+                <div className="normal-card">
+                    <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
+                        <img style={{height:"90px"}} src={InternetConnection} alt="Internet Connection"></img>
+                    </Grid>
+                    <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
+                        <p className="big-text">Form Connections</p>
+                        <p className="small-text" style={{fontWeight: "300", color: "#5c5c5c"}}>Build connections with the people you live, work, and commute with.</p>
+                    </Grid>
+                </div>
+            </Grid>
+
+            <Grid container justify="center" item xs={12} sm={12}>
+                <Grid>
+                    <p style={{textAlign: "center", fontWeight:800, fontSize:40, color:'#444444', marginLeft: "16px", marginBottom: "5px"}}>Explore options with HousingHelper</p>
+                </Grid>
+            </Grid>
+
+            <Grid container justify="center" item xs={12} sm={12}>
+                <p className="small-text" style={{textAlign: "center", fontWeight: "300", color: "#5c5c5c", marginLeft: "16px", marginBottom: "25px"}}>Browse and filter housing options users have been posting on HousingHelper.</p>
+            </Grid>
+
+
+            {/* Filters Card */}
+
             <Grid item xs={12} sm={12}>
-                <div className="normal-card" style={{marginLeft: "16px", marginTop: "220px"}}>
+                <div className="normal-card" style={{marginLeft: "16px", marginTop: "30px"}}>
                     
                 <Grid container style={{marginBottom:10}} justify="center" spacing={3}>
                     <h2 className="big-text">Filters</h2>
@@ -248,7 +336,7 @@ export default class HomePage extends Component{
 
 
                 <Grid item xs={12} sm={12}>
-                    <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Posts</p></center>
+                    <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px', marginLeft: '16px'}}>Posts</p></center>
                 </Grid>
             </Grid>
         </Grid>
@@ -259,3 +347,6 @@ export default class HomePage extends Component{
     )
   }
 }
+
+// Icons
+// <div>Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

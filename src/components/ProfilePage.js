@@ -73,7 +73,7 @@ export default class ProfilePage extends Component{
                   </Grid>
 
                   <Grid item xs={12} sm={12}>
-                      <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>About</p></center>
+                      <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px', marginLeft: '16px'}}>About</p></center>
 
                       <div className="normal-card" style={cardStyleMarg}>
                           

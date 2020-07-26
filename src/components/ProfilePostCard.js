@@ -195,7 +195,7 @@ export default class ProfilePage extends Component{
                     
                     <Grid item xs={12} sm={grid_sm}>
                     <Grid>
-                        <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Posts</p></center>
+                        <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px', marginLeft: '16px'}}>Posts</p></center>
 
                     </Grid>
                     {
@@ -278,8 +278,8 @@ export default class ProfilePage extends Component{
                 
                 <Grid item xs={12} sm={grid_sm}>
                     <Grid>
-                        <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Requests</p></center>
-                        <center><p style={{marginTop: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto"}} className="small-text">Accept or Decline to share your personal email to interested requester.</p></center>
+                        <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px', marginLeft: '16px'}}>Requests</p></center>
+                        <center><p style={{marginTop: "0px", fontWeight: "300", color: "#5c5c5c", marginInlineStart: "auto", marginLeft: '16px'}} className="small-text">Accept or Decline to share your personal email to interested requester.</p></center>
 
                     </Grid>
 
@@ -316,7 +316,7 @@ export default class ProfilePage extends Component{
                 </Grid>
                 <Grid item xs={12} sm={12}>
                     <Grid>
-                        <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px'}}>Matches</p></center>
+                        <center><p style={{fontWeight:900, fontSize:50, color:'#444444', marginTop:'40px', marginLeft: '16px'}}>Matches</p></center>
                     </Grid>
                     
                 </Grid>
