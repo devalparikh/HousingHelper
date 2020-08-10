@@ -251,7 +251,7 @@ export default class HomePage extends Component{
                     </Grid>
                     <Grid container style={{marginBottom:10, textAlign: "center"}} justify="center" spacing={3}>
                         <p className="big-text">Stress Less</p>
-                        <p className="small-text" style={{fontWeight: "300", color: "#5c5c5c"}}>Don't wait until the last minute. Use HousingHelper to find housing of town.</p>
+                        <p className="small-text" style={{fontWeight: "300", color: "#5c5c5c"}}>Don't wait until the last minute. Use HousingHelper to find you next place.</p>
                     </Grid>
                 </div>
             </Grid>
