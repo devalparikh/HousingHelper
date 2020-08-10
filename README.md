@@ -4,7 +4,7 @@ A simple way to find a roommate and a buddy
 
 [Application Design Notes - HousingHelper](https://www.notion.so/Application-Design-HousingHelper-83f2f97a2a284815b569f1685c8420bd)
 
-## Idea
+## About
 
 ---
 
@@ -26,6 +26,11 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 - Spark MLlib
 - Elasticsearch 
 
+## WIP System Design
+
+---
+
+![https://github.com/devalparikh/housinghelper/blob/master/CurrentSystemDesign.png?raw=true](https://github.com/devalparikh/housinghelper/blob/master/CurrentSystemDesign.png?raw=true)
 
 ## API Routes
 
