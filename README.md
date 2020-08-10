@@ -1,8 +1,8 @@
 ![https://github.com/devalparikh/housinghelper/blob/master/public/Group%202.png?raw=true](https://github.com/devalparikh/housinghelper/blob/master/public/Group%202.png?raw=true)
 
-A simple way to find a roommate and a carpool buddy
+A simple way to find a roommate and a buddy
 
-[Application Design - HousingHelper](https://www.notion.so/Application-Design-HousingHelper-83f2f97a2a284815b569f1685c8420bd)
+[Application Design Notes - HousingHelper](https://www.notion.so/Application-Design-HousingHelper-83f2f97a2a284815b569f1685c8420bd)
 
 ## Idea
 
@@ -20,6 +20,12 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 - MongoDB
 - Docker
 - NGINX
+
+- (Heroku) -> 
+- AWS EC2, AWS S3, Amazon EMR, Amazon Elasticsearch Service
+- Spark MLlib
+- Elasticsearch 
+
 
 ## API Routes
 
