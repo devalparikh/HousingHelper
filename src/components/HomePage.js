@@ -141,7 +141,7 @@ export default class HomePage extends Component{
                                   style={{ width: 300, height: 100 }}
                                   renderInput={(params) => <TextField {...params} label="Company" variant="outlined" />}
                               />
-                          </Grid>
+                    </Grid>
                 </Grid>
                 <Grid container justify="center" spacing={3}>
                     { this.state.company !== "" ? <p style={{fontWeight:900, fontSize:50, color:'#444444'}}>{this.state.company} @&nbsp;</p> : <p></p> }
