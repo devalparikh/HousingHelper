@@ -30,7 +30,7 @@ Find 3rd party housing and filter housing posts by company, location, and price.
 
 ---
 
-![https://github.com/devalparikh/housinghelper/blob/master/CurrentSystemDesign.png?raw=true](https://github.com/devalparikh/housinghelper/blob/master/CurrentSystemDesign.png?raw=true)
+![System Design](https://github.com/devalparikh/housinghelper/blob/master/SystemDesign.png?raw=true)
 
 ## API Routes
 
